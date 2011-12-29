@@ -1,5 +1,5 @@
 {
-    "name": "application-name"
+    "name": "nomi-nation"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
@@ -8,5 +8,6 @@
     , "express-messages" : ">= 0.0.2"
     , "facebook-js" : "1.0.1"
     , "mongoose" : "2.4.8"
+    , "log" : "1.2.0"
   }
 }
