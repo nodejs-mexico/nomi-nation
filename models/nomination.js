@@ -1,7 +1,18 @@
 function defineModels(mongoose, fn) {
     var Schema = mongoose.Schema,
         Nomination, User;
-      
+
+    /**
+     * 
+     * Model: User
+     * 
+    */
+    User = new Schema({
+        '_id' : String, //fb id
+        'name' : String, //user name
+        'votes' : Number //number of votes for this user
+    });
+    
     /**
      * 
      * Model: Nomination
@@ -9,11 +20,14 @@ function defineModels(mongoose, fn) {
     */
     Nomination = new Schema({
         'name' : String,
-        'users' : [String],
-        'type' : String,
-        'sub_type' : String,
-        'active' : Boolean,
-        'erased' : [String]
+        'owner' : String, //who is the owner of the nomination
+        'endDate' : Date, //when this nomination is going to end
+        'users' : [User], //users added to this nomination
+        'voters' : [String], //all the dudes that vote this nomination
+        'category' : String,
+        'sub_cat' : String,
+        'active' : Boolean, //nomination finished
+        'erased' : [String] //people erased by facebook id, we wont be able to re-add them
     });
     
     Nomination.virtual('id')
@@ -26,28 +40,7 @@ function defineModels(mongoose, fn) {
         next();
     });
     
-     /**
-     * 
-     * Model: User
-     * 
-    */
-    User = new Schema({
-        'name' : String,
-        'nominations' : [String]
-    });
-    
-    User.virtual('id')
-        .get(function() {
-      return this._id.toHexString();
-    });
-    
-    User.pre('save', function(next) {
-        //we could use this later
-        next();
-    });
-    
     mongoose.model('Nomination', Nomination);
-    mongoose.model('User', User);
 
     fn();
 }
