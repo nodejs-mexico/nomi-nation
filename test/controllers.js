@@ -1,3 +1,8 @@
+/**
+ * 
+ * Controller testing
+ * 
+*/
 var vows = require('vows'),
     assert = require('assert'),
     nominator = require('../controllers/nominator.js');

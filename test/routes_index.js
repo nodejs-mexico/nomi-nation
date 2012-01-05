@@ -1,3 +1,7 @@
+/**
+ * 
+ * Test index route
+*/
 var vows = require('vows'),
     assert = require('assert'),
     zombie = require('zombie'),

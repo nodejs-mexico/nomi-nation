@@ -13,7 +13,7 @@ function findIndexByKeyValue(obj, key, value)
 {
     var l = obj.length;
     for (var i = 0; i < l; i++) {
-		if (obj[i][key] == value) {
+        if (obj[i][key] == value) {
 			return i;
 		}
 	}
@@ -29,20 +29,19 @@ function findIndexByKeyValue(obj, key, value)
 */
 NOMINATOR.vote = function(nomination, voterId, userId, callback) {
     //TODO: check we dont want more than 10 users per nomination
-    var isPresent;
+    var isPresent = -1;
     try {
         isPresent = nomination.voters.indexOf(voterId);
     }
     catch (e){
-        isPresent = 0;
+        isPresent = -1;
     }
     if (isPresent < 0){
         nomination.voters.push(voterId);
-    }else{
-        //TODO: change to an actual mongo function
-        var index = findIndexByKeyValue(nomination.users, "_id", userId);
-        nomination.users[index].votes += 1;
     }
+    //TODO: change to an actual mongo function
+    var index = findIndexByKeyValue(nomination.users, "_id", userId);
+    nomination.users[index].votes += 1;
     nomination.save(callback);
     //Nomination.update({_id :nomination.id}, {users: nomination.users}, callback);
 };
@@ -73,8 +72,6 @@ NOMINATOR.addUser = function(nomination, user, callback) {
  * @callback function 
 */
 NOMINATOR.eraseUser = function(nomination, user, callback) {
-    console.log(nomination.users);
-    console.log(user);
     nomination.users.remove(user); //erased from the users list
     nomination.erased.push(user._id); //add to the erased so we dont add them again
     nomination.save(callback);
@@ -92,35 +89,38 @@ NOMINATOR.createNomination = function(nomination, callback) {
 };
 
 /**
- * find the nominations i own
+ * find nominations the user own
  * @userid fb userid
  * @callback function
  * 
 */
 NOMINATOR.findMyNominations = function(userId, callback) {
     Nomination.where('owner', userId)
+        .where('active', true)
         .run(callback);
 };
 
 /**
- * find the nominations i voted
+ * find nominations the user voted
  * @userId fb userid
  * @callback function
  * 
 */
 NOMINATOR.findVoted = function(userId, callback) {
     Nomination.where('voters').in([userId])
+        .where('active', true)
         .run(callback);
 };
 
 /**
- * find the nominates where i was nominated
+ * find nominates where the user was nominated
  * @userId fb userid
  * @callback function
  * 
 */
 NOMINATOR.findNominated = function(userId, callback) {
     Nomination.where('users._id').in([userId])
+        .where('active', true)
         .run(callback);
 };
 

@@ -4,10 +4,13 @@
   , "private": true
   , "dependencies": {
       "express": "2.5.2"
-    , "jade": ">= 0.0.1"
     , "express-messages" : ">= 0.0.2"
     , "facebook-js" : "1.0.1"
-    , "mongoose" : "2.4.8"
+    , "jade": ">= 0.0.1"
     , "log" : "1.2.0"
+    , "mongoose" : "2.4.8"
+    , "vows" : "0.6.1"
+    , "zombie" : "0.12.9"
+    , "jsdom" : "0.2.10"
   }
 }

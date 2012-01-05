@@ -1,7 +1,6 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),    
     Log = require('log'), 
     log = new Log(),
