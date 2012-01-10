@@ -44,4 +44,39 @@ exports.index = vows.describe('Visiting index').addBatch({
             }
         }
     }
+}).addBatch({
+    'when hitting login':{
+        topic: function(){
+            zombie.visit('http://nomi-nation.pinguxx.cloud9ide.com/login',
+                this.callback);
+        },
+        'we got the page': function(err, browser, status) {
+            if (err){
+                throw(err.message);
+            }
+            assert.equal(status, 200);
+        },
+        'and try to get user name' : {
+            topic : function(browser){
+                var vow = this;
+                jsdom.env({
+                    html: browser.response[2],
+                    scripts: [
+                        'http://code.jquery.com/jquery-1.7.1.min.js'
+                    ],
+                    done: vow.callback
+                });
+            },
+            'the title is Express' : function(errors, window) {
+                //console.log(errors);
+                if (errors){
+                    throw(errors);
+                }else{
+                    var $ = window.$;
+                    console.log($('.username').html());
+                    assert.ok($('.username').html());
+                }
+            }
+        }
+    }
 });

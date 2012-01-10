@@ -1,2 +1,6 @@
-[Mon, 09 Jan 2012 18:43:36 GMT] NOTICE landed on:Mon Jan 09 2012 18:43:36 GMT+0000 (GMT)
-[Mon, 09 Jan 2012 18:43:46 GMT] NOTICE landed on:Mon Jan 09 2012 18:43:46 GMT+0000 (GMT)
+[Tue, 10 Jan 2012 20:12:43 GMT] NOTICE landed on:Tue Jan 10 2012 20:12:43 GMT+0000 (GMT)
+[Tue, 10 Jan 2012 20:12:49 GMT] NOTICE trying to login:Tue Jan 10 2012 20:12:49 GMT+0000 (GMT)
+[Tue, 10 Jan 2012 20:12:53 GMT] NOTICE response from fb: Tue Jan 10 2012 20:12:53 GMT+0000 (GMT)
+[Tue, 10 Jan 2012 20:12:53 GMT] NOTICE trying to get the tokens:Tue Jan 10 2012 20:12:53 GMT+0000 (GMT)
+[Tue, 10 Jan 2012 20:12:54 GMT] NOTICE getting info from user:1239274592
+[Tue, 10 Jan 2012 20:12:54 GMT] NOTICE landed on dashboard user: 1239274592 on: Tue Jan 10 2012 20:12:54 GMT+0000 (GMT)

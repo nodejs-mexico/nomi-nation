@@ -5,5 +5,9 @@
     },
     "creator": {
         "name": "MrPix"
+    },
+    "dashboard":{
+        "user_name" : "Nombre del usuario",
+        "user_id" : "Id del usuario"
     }
 }

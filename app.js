@@ -5,9 +5,10 @@ var express = require('express'),
     Log = require('log'),
     log = new Log(),
     fs = require('fs'),
-    i18next = require('i18next');
-//MemoryStore = require('connect/lib/middleware/session/memory'),
-//session_store = new MemoryStore();
+    i18next = require('i18next'),
+    MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
+    session_store = new MemoryStore();
+
 var app = module.exports = express.createServer();
 
 i18next.init({
@@ -43,7 +44,7 @@ app.configure(function() {
     app.use(i18next.handle);
     app.use(express.methodOverride());
     app.use(express.cookieParser()); // cookie parser
-    //app.use(express.session({secret: 'nodejsMexico', store: session_store}));
+    app.use(express.session({secret: 'nodejsMexico', store: session_store}));
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
 });
@@ -55,6 +56,7 @@ i18next.registerAppHelper(app)
     
 // Routes
 require('./routes/index')(app, log);
+require('./routes/dashboard')(app, log);
 
 if (!module.parent) {
     app.listen(process.env.PORT || 3000);
