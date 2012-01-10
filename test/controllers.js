@@ -125,9 +125,12 @@ nominator.createNomination(nomination, function(err, doc){
             nominator.addUser(doc, user, function(err){
                 if (err) {  console.log(err); return; } 
             });
-            nominator.addUser(doc, {"_id":19, "name":19, "votes":0 }, function(err){
-                if (err) {  console.log(err); return; } 
-            });
+            nominator.addUser(doc, 
+                {"_id":19, "name":19, "votes":0 }, 
+                function(err){
+                    if (err) {  console.log(err); return; } 
+                }
+            );
         });
     });
 });*/

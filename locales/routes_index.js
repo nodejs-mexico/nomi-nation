@@ -2,15 +2,19 @@
  * 
  * Test index route
 */
-var vows = require('vows'),
+var app = require('../app'),
+    vows = require('vows'),
     assert = require('assert'),
     zombie = require('zombie'),
     jsdom = require('jsdom');
     
+app.listen(process.env.PORT || 3000);
+
 exports.index = vows.describe('Visiting index').addBatch({
     'when hitting the page': {
         topic: function(){
-            zombie.visit('http://nomi-nation.pinguxx.cloud9ide.com',this.callback);
+            zombie.visit('http://nomi-nation.pinguxx.cloud9ide.com',
+                this.callback);
         },
         'we got the page': function(err, browser, status) {
             if (err){
@@ -35,7 +39,7 @@ exports.index = vows.describe('Visiting index').addBatch({
                     throw(errors);
                 }else{
                     var $ = window.$;
-                    assert.equal('Express', $('title').html());
+                    assert.equal('Nomi-nation', $('title').html());
                 }
             }
         }

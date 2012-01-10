@@ -1,0 +1,9 @@
+{
+    "app": {
+        "name": "Nomi-nation",
+         "welcome" : "Welcome to $t(app.name)"
+    },
+    "creator": {
+        "name": "MrPix"
+    }
+}

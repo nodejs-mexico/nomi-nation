@@ -1,6 +1,9 @@
 !!! 5
 html(lang="en")
   head
-    title= title
+    title= t('app.name')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body!= body
+  script(src="http://code.jquery.com/jquery-1.7.1.min.js", type="text/javascript")
+  script(src='i18next/i18next.js', type='text/javascript')
+  script(src='javascripts/script.js', type='text/javascript')
