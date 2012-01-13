@@ -88,6 +88,15 @@ NOMINATOR.createNomination = function(nomination, callback) {
     myNomination.save(callback);    
 };
 
+/** 
+ * Erase nomination
+ * @nominationid string
+ * @callback function 
+*/
+NOMINATOR.eraseNomination = function(nominationid, callback) {    
+    Nomination.erase({'_id' : nominationid }, callback);    
+};
+
 /**
  * find nominations the user own
  * @userid fb userid

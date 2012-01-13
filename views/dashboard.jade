@@ -1,2 +1,128 @@
-.username #{t('dashboard.user_name')}: #{user.name}
-.userid #{t('dashboard.user_id')}: #{user.id}
+#header-container
+    header.wrapper.clearfix
+        .new
+            a#nn(href="#")= t('dashboard.new_nomination')
+        .loading 
+            img(src="/images/loading.png")
+        .exit 
+            a(href="/logout")= t('dashboard.exit')
+#main-container
+    #main.wrapper.clearfix
+        .nominations
+            div.nheader.title #{t('dashboard.mine')}
+            ul
+                li
+                    input(type="checkbox", checked="true")
+                    label  Nomination 1
+                li 
+                    input(type="checkbox")
+                    label  Nomination 2
+                li 
+                    input(type="checkbox")
+                    label  Nomination 3
+            div.title #{t('dashboard.appear')}
+            ul
+                li 
+                    input(type="checkbox")   
+                    label  Nomination a
+                li 
+                    input(type="checkbox")   
+                    label  Nomination b
+                li 
+                    input(type="checkbox")   
+                    label  Nomination d
+                li 
+                    input(type="checkbox")   
+                    label  Nomination e
+                li 
+                    input(type="checkbox")   
+                    label  Nomination f
+                li 
+                    input(type="checkbox")   
+                    label  Nomination g
+                li 
+                    input(type="checkbox")   
+                    label  Nomination h
+
+            div.title #{t('dashboard.voted')}
+            ul
+                li 
+                    input(type="checkbox")  
+                    label  Nomination i
+                li 
+                    input(type="checkbox")   
+                    label  Nomination ii
+                li 
+                    input(type="checkbox")   
+                    label  Nomination iii
+        .details
+            fieldset.fs
+                legend Nomination 1
+                .header                    
+                    .users #{t('dashboard.users')}
+                    .add 
+                        a#am(href="#")#{t('dashboard.add_more')}
+                    .date Date
+                br
+                .list
+                    table.userst
+                        thead
+                            tr
+                                th #{t('dashboard.name')}
+                                th #{t('dashboard.votes')}
+                                th
+                        tbody
+                            tr
+                                td User 1
+                                td 2
+                                td
+                                    a(href="#") #{t('dashboard.vote')}
+                                    | /
+                                    a(href="#") #{t('dashboard.erase')}
+                            tr
+                                td User 2
+                                td 3
+                                td
+                                    a(href="#") #{t('dashboard.vote')}
+                                    | /
+                                    a(href="#") #{t('dashboard.erase')}
+                            - for (var i =4; i<11;i++)
+                                tr
+                                    td User #{i}
+                                    td #{Math.floor(Math.random()*11)}
+                                    td
+                                        a(href="#") #{t('dashboard.vote')}
+                                        | /
+                                        a(href="#") #{t('dashboard.erase')}
+                .btns
+                    button.myButton#end #{t('dashboard.end_nomination')}
+                    button.myButton#remove #{t('dashboard.remove_me')}
+                    button.myButton#cancel #{t('dashboard.cancel')}
+        .images
+        .logo logo
+        .ficon
+            img(src="/images/ipn.png")
+#footer-container
+    footer.wrapper
+
+#dialog-new(title="Create new nomination")
+    p.validateTips All form fields are required
+    form
+        fieldset
+            label.forml(for="name") Name:
+            input#name.text.ui-widget-content.ui-corner-all(type="text", name="name")
+            br
+            label.forml(for="email") End date:
+            input#datep.text.ui-widget-content.ui-corner-all(type="text", name="datep")
+
+#dialog-add(title="Add friends")
+    #addAttr
+    form
+        fieldset
+            ol#selectable
+                li.ui-state-default 1
+                li.ui-state-default 2
+                li.ui-state-default 3
+                li.ui-state-default 4
+                li.ui-state-default 5
+                li.ui-state-default 6

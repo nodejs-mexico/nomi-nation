@@ -4,14 +4,22 @@
 var fb = require('facebook-js');
 
 module.exports = function(app, log){
-    //var nominator = require('../controllers/nominator.js');
+    
     /**
      * GET home page.
     */
     app.get('/', function(req, res){
         log.notice('landed on:' + new Date());
-        res.render('index');
-    });    
+        res.render('index', { error : req.param('error')});
+    });
+    
+    /**
+     * Logout page
+     */
+    app.get('/logout', function(req, res){
+        req.session.destroy(function(err){ res.redirect('/') });
+    });
+        
     /**
      * Login page
     */

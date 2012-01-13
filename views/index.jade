@@ -1,3 +1,29 @@
-h1= t('app.name')
-p #{t('app.welcome')}
-.by by: #{t('creator.name')}
+#header-container
+    header.wrapper.clearfix
+        h1.title= t('app.name')
+#main-container
+    #main.wrapper.clearfix
+        table.att_table
+            thead
+                tr
+                    th= t('index.features')
+            tbody
+                tr
+                    td= t('index.feature1')
+                tr
+                    td= t('index.feature2')
+                tr
+                    td= t('index.feature3')
+                tr
+                    td= t('index.feature4')
+                tr
+                    td= t('index.feature5')
+                    td
+                        a(href="/login")
+                            img(src="/images/cwf.png")
+        - if (error)
+            .error #{error}
+#footer-container
+    footer.wrapper
+        .ficon
+            img(src="/images/ipn.png")

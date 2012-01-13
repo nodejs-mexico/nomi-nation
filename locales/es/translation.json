@@ -4,7 +4,7 @@
         "welcome" : "Bienvenido a $t(app.name)"
     },
     "creator": {
-        "name": "MrPix"
+        "name": "&copy; ipseitycloud"
     },
     "dashboard":{
         "user_name" : "Nombre del usuario",
