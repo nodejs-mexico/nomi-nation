@@ -1,3 +1,6 @@
+- var login = "/login";
+- if (invited)
+    - login = "/login?invited="+invited;
 #header-container
     header.wrapper.clearfix
         h1.title= t('app.name')
@@ -18,11 +21,11 @@
                     td= t('index.feature4')
                 tr
                     td= t('index.feature5')
-                    td
-                        a(href="/login")
+                    td                        
+                        a(href="#{login}")
                             img(src="/images/cwf.png")
         - if (error)
-            .error #{error}
+            .error #{t(error)}
 #footer-container
     footer.wrapper
         .ficon

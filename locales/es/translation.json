@@ -1,4 +1,5 @@
 {
+    "nli": "Usuario no ah iniciado session",
     "app": {
         "name": "Nomi-nation",
         "welcome" : "Bienvenido a $t(app.name)"
@@ -7,7 +8,29 @@
         "name": "&copy; ipseitycloud"
     },
     "dashboard":{
-        "user_name" : "Nombre del usuario",
-        "user_id" : "Id del usuario"
+        "new_nomination" : "Nueva nominaci&oacute;n",
+        "exit" : "Salir",
+        "mine" : "Mias",
+        "appear" : "Aparezco",
+        "voted" : "Vote",
+        "users" : "Usuarios",
+        "add_more" : "Agregar mas",
+        "name" : "Nombre",
+        "votes" : "Votos",
+        "vote" : "Votar",
+        "erase" : "Borrar",
+        "end_nomination" : "Terminar nominaci&oacute;n",
+        "remove_me" : "Quitarme",
+        "cancel" : "Cancelar nominaci&oacute;n",
+        "end_date" : "Fecha final:",
+        "refresh" : "Actualizar"
+    },
+    "index":{
+        "features": "Características",
+        "feature1" : "Nomina a tus amigos de facebook",
+        "feature2" : "Enviar reconocimiendo o verguenza a tus amigos",
+        "feature3" : "Invita al mas feo, bonito, tonto o cualquier de tus amigos",
+        "feature4" : ":D",
+        "feature5" : "Diviertete!!!"
     }
 }

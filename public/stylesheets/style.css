@@ -200,6 +200,9 @@ table { border-collapse: collapse; border-spacing: 0; }
    Primary styles
    Author: mrpix
    ========================================================================== */
+.refresh{
+    float: right;
+}
 .logo{
     text-align: center;
 }
@@ -278,6 +281,7 @@ label{
     height: 90%;
     overflow: auto;
     float: left;
+    display: none;
 }
 .new{
     float: left;
@@ -361,8 +365,11 @@ label{
 #selectable .ui-selecting { background: #FECA40; }
 #selectable .ui-selected { background: #F39814; color: white; }
 #selectable { list-style-type: none; margin: 0; padding: 0; }
-#selectable li { margin: 3px; padding: 1px; float: left; width: 50px; height: 40px; font-size: 2em; text-align: center; }
+#selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 10pt; text-align: center; }
 
+#filterform{
+    text-align: center;
+}
 /* ===================================================
     Initializr styles
     http://verekia.com/initializr/responsive-template

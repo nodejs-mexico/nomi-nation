@@ -1,4 +1,5 @@
 {
+    "nli": "User not logged in",
     "app": {
         "name": "Nomi-nation",
         "welcome" : "Bienvenido a $t(app.name)"
@@ -20,7 +21,9 @@
         "erase" : "Erase",
         "end_nomination" : "End nomination",
         "remove_me" : "Remove me",
-        "cancel" : "Cancel"
+        "cancel" : "Cancel Nomination",
+        "end_date" : "End date:",
+        "refresh" : "Refresh"
     },
     "index":{
         "features": "Features",
