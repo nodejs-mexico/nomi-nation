@@ -197,11 +197,30 @@ module.exports = function(app, log){
                 if (err) { log.debug('error adding users'); res.json(null); return; }
                 res.json(true);
                 var usersl = req.param('users');
-                var userl = usersl.length;
-                for (var i=0;i<userl;i++){
+                var userl = 0;
+                if (usersl instanceof Array){
+                    userl = usersl.length;
+                    for (var i=0;i<userl;i++){
+                        fb.apiCall(
+                            'POST',
+                            '/'+usersl[i]._id+'/feed',
+                            {
+                                access_token: req.session.user.access_token,
+                                message: 'Te agregaron a "' + doc.name + '" en nomi-nation ' +
+                                    'agrega a tus amigos tambien',
+                                name: "Votar",
+                                link: url + '?invited=' + req.param('id')
+                            },
+                            function (error, response, body) {
+                                if (error) { log.debug('error posting on voted user'); return; }
+                                log.notice('posted on the added user wall: ' + usersl[i]._id);
+                            }
+                        );
+                    }
+                }else{
                     fb.apiCall(
                         'POST',
-                        '/'+usersl[i]._id+'/feed',
+                        '/'+usersl._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
                             message: 'Te agregaron a "' + doc.name + '" en nomi-nation ' +
@@ -211,7 +230,7 @@ module.exports = function(app, log){
                         },
                         function (error, response, body) {
                             if (error) { log.debug('error posting on voted user'); return; }
-                            log.notice('posted on the added user wall: ' + usersl[i]._id);
+                            log.notice('posted on the added user wall: ' + usersl._id);
                         }
                     );
                 }
