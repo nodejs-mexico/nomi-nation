@@ -2,7 +2,7 @@
  * Rutas dashboard 
 */
 var fb = require('facebook-js'),
-    url = 'http://nomi-nation.pinguxx.c9.io/';
+    url = 'http://nomination.cloudno.de/';
 
 function findIndexByKeyValue(obj, key, value)
 {

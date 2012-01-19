@@ -24,9 +24,9 @@ module.exports = function(app, log){
      * Login page
     */
     app.get('/login', function(req, res){
-        var redirect = 'http://nomi-nation.pinguxx.c9.io/auth/fb';
+        var redirect = '/auth/fb';
         if (req.param('invited')){
-            redirect = 'http://nomi-nation.pinguxx.c9.io/auth/fb?invited='+req.param('invited');
+            redirect = '/auth/fb?invited='+req.param('invited');
         }
         log.notice('trying to login:' + new Date());
         res.redirect(fb.getAuthorizeUrl({
@@ -41,9 +41,9 @@ module.exports = function(app, log){
     app.get('/auth/fb', function(req, res){
         log.notice('response from fb: ' + new Date());
         var invited = req.param('invited');
-        var redirect = 'http://nomi-nation.pinguxx.c9.io/auth/fb';
+        var redirect = '/auth/fb';
         if (invited){
-            redirect = 'http://nomi-nation.pinguxx.c9.io/auth/fb?invited='+invited;
+            redirect = '/auth/fb?invited='+invited;
         }
         fb.getAccessToken('264644053569277', //clientid
             '76ded2bf195073ce7a183a1ef1cd0b8a', //app secret
