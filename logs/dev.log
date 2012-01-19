@@ -1,9 +1,7 @@
-[Wed, 18 Jan 2012 20:29:54 GMT] NOTICE landed on:Wed Jan 18 2012 20:29:54 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:29:56 GMT] NOTICE trying to login:Wed Jan 18 2012 20:29:56 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:30:04 GMT] NOTICE response from fb: Wed Jan 18 2012 20:30:04 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:30:04 GMT] NOTICE trying to get the tokens:Wed Jan 18 2012 20:30:04 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:30:04 GMT] NOTICE getting info from user:1239274592
-[Wed, 18 Jan 2012 20:30:05 GMT] NOTICE landed on dashboard user: 1239274592 on: Wed Jan 18 2012 20:30:05 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:30:06 GMT] NOTICE getting friends from user:1239274592
-[Wed, 18 Jan 2012 20:34:28 GMT] NOTICE landed on dashboard user: 1239274592 on: Wed Jan 18 2012 20:34:28 GMT+0000 (GMT)
-[Wed, 18 Jan 2012 20:34:29 GMT] NOTICE getting friends from user:1239274592
+[Thu, 19 Jan 2012 01:13:38 GMT] NOTICE landed on:Thu Jan 19 2012 01:13:38 GMT+0000 (GMT)
+[Thu, 19 Jan 2012 01:13:41 GMT] NOTICE trying to login:Thu Jan 19 2012 01:13:41 GMT+0000 (GMT)
+[Thu, 19 Jan 2012 01:13:42 GMT] NOTICE response from fb: Thu Jan 19 2012 01:13:42 GMT+0000 (GMT)
+[Thu, 19 Jan 2012 01:13:43 GMT] NOTICE trying to get the tokens:Thu Jan 19 2012 01:13:43 GMT+0000 (GMT)
+[Thu, 19 Jan 2012 01:13:43 GMT] NOTICE getting info from user:1239274592
+[Thu, 19 Jan 2012 01:13:43 GMT] NOTICE landed on dashboard user: 1239274592 on: Thu Jan 19 2012 01:13:43 GMT+0000 (GMT)
+[Thu, 19 Jan 2012 01:13:44 GMT] NOTICE getting friends from user:1239274592

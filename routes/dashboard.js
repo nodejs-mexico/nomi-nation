@@ -113,7 +113,8 @@ module.exports = function(app, log){
             'active' : true         
         };
         nominator.createNomination(nomination, function(err, doc){
-            if (err) { console.log(err); return; }
+            if (err) { log.debug(err); return; }
+            log.notice('nomination '+ req.param('name') +' created by: ' + req.session.user.id );
             res.json(doc);
         });        
     });
@@ -125,7 +126,8 @@ module.exports = function(app, log){
         //TODO: erase nomination
         var id = req.param('id');
         nominator.eraseNomination(id, function(err){
-            if (err) { console.log(err); res.json(null); return; }
+            if (err) { log.debug(err); res.json(null); return; }
+            log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
             res.json(true);
         });
     });
@@ -151,13 +153,14 @@ module.exports = function(app, log){
                     '/'+voterid+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Votaste por ' + nom.users[index].name + ' en ' + 
-                            nom.name + ' en nomi-nation, vota tu tambien en ' + 
-                            url + '?invited=' + req.param('id')
+                        message: 'Votaste por "' + nom.users[index].name + '" en "' + 
+                            nom.name + '" en nomi-nation, vota tu tambien',
+                        name: "Votar",
+                        link: url + '?invited=' + req.param('id')
                     },
                     function (error, response, body) {
-                        log.debug(error);
-                        log.debug(body);
+                        if (error) { log.debug('error posting on my wall'); return; }
+                        log.notice('posted on current user wall: ' + voterid);
                     }
                 );
                 //post to the victim
@@ -166,14 +169,17 @@ module.exports = function(app, log){
                     '/'+nom.users[index]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Votaron por ti en ' + nom.name + ' en nomi-nation ' +
-                            'vota tu tambien en ' + url + '?invited=' + req.param('id')
+                        message: 'Votaron por ti en "' + nom.name + '" en nomi-nation ' +
+                            'vota tu tambien',
+                        name: "Votar",
+                        link: url + '?invited=' + req.param('id')
                     },
                     function (error, response, body) {
-                        log.debug(error);
-                        log.debug(response);
+                        if (error) { log.debug('error posting on voted user'); return; }
+                        log.notice('posted on the voted user wall: ' + nom.users[index]._id);
                     }
                 );
+                log.notice('nomination '+ req.param('id') +' voted by: ' + req.session.user.id );
             });
         });        
     });
@@ -188,7 +194,7 @@ module.exports = function(app, log){
         nominator.findNomination(id,function(err, doc){
             if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
             nominator.addUser(doc, users, function(err){
-                if (err) { console.log(err); res.json(null); return; }
+                if (err) { log.debug('error adding users'); res.json(null); return; }
                 res.json(true);
             });
         });

@@ -200,6 +200,9 @@ table { border-collapse: collapse; border-spacing: 0; }
    Primary styles
    Author: mrpix
    ========================================================================== */
+.header{
+    overflow: auto;
+}
 .refresh{
     float: right;
 }
@@ -288,10 +291,10 @@ label{
 }
 .loading{
     text-align: center;
+    float: left;
 }
 .exit{
     float: right;
-    margin-top: -1.7em;
 }
 
 .copy {
@@ -306,7 +309,6 @@ label{
 }
 .att_table
 {
-	
 	background: #fff;
 	margin: 0px 40px 3px 50px;
 	width: 90%;

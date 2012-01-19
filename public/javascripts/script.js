@@ -10,6 +10,13 @@ var options = {
 $.i18n.init(options, function() { 
     //TODO: add more text
 });    
+// custom css expression for a case-insensitive contains()
+jQuery.expr[':'].Contains = function(a,i,m){
+    return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+};
+jQuery.extend(jQuery.expr[':'], { 
+     containsExactly: "$(a).text() == m[3]" 
+}); 
 $(function() {    
     var list = $('#selectable');
     var vote = function(ev){
@@ -19,7 +26,7 @@ $(function() {
         var id = tr.attr('id');
         var nid = $('.details').attr('nid');
         var name = $('.details').find('legend').text();
-        /*$.post("/nominations/vote", { id: nid, userid: id },
+        $.post("/nominations/vote", { id: nid, userid: id },
             function(data) {
                 if (data){
                     console.log(data);
@@ -29,13 +36,16 @@ $(function() {
                     alert("error");                            
                 }
             }
-        ).error(function(err) {console.log(err); alert("error"); });*/
-        //add to voted list
+        ).error(function(err) {console.log(err); alert("error"); });
+        //TODO: check if exists already        
         var list = $('#voted');
-        var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
-        list.append(li);
-        li.find("label").click(checkOne);
-        li.find("input").click(checkOne);
+        var found = list.find('li:containsExactly('+name+')');
+        if (found.length < 1){
+            var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
+            list.append(li);
+            li.find("label").click(checkOne);
+            li.find("input").click(checkOne);
+        }
     };
     var erase = function(ev){
         ev.preventDefault();
@@ -162,11 +172,7 @@ $(function() {
     var invited = $('.invited');
     if (invited[0]){
         showNomination(invited.attr('invited'), 'voted');
-    }
-    // custom css expression for a case-insensitive contains()
-    jQuery.expr[':'].Contains = function(a,i,m){
-        return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
-    };    
+    }    
     $("#filterinput").change( function () {
         var filter = $(this).val();
         if(filter) {
