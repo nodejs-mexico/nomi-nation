@@ -196,6 +196,24 @@ module.exports = function(app, log){
             nominator.addUser(doc, users, function(err){
                 if (err) { log.debug('error adding users'); res.json(null); return; }
                 res.json(true);
+                var userl = users.length;
+                for (var i=0;i<userl;i++){
+                    fb.apiCall(
+                        'POST',
+                        '/'+users[i]._id+'/feed',
+                        {
+                            access_token: req.session.user.access_token,
+                            message: 'Te agregaron a "' + doc.name + '" en nomi-nation ' +
+                                'agrega a tus amigos tambien',
+                            name: "Votar",
+                            link: url + '?invited=' + req.param('id')
+                        },
+                        function (error, response, body) {
+                            if (error) { log.debug('error posting on voted user'); return; }
+                            log.notice('posted on the added user wall: ' + users[i]._id);
+                        }
+                    );
+                }
             });
         });
     });
@@ -209,11 +227,68 @@ module.exports = function(app, log){
         var id = req.param('id');
         //add a friend, try to write to the user wall and local
         nominator.findNomination(id,function(err, doc){
-            if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
+            if (err) { log.debug('error getting nominations'); res.json(null); return; }
             nominator.eraseUser(doc, user, function(err){
-                if (err) { console.log(err); res.json(null); return; }
+                if (err) { log.debug('error erasing nominations'); res.json(null); return; }
                 res.json(true);
             });
         });
     });
+    
+    /**
+     * Terminar nominacion
+     */
+    app.post('/nominations/end', checkUser, function(req, res){
+        //TODO: end the nomination and declare a winner
+        var id = req.param('id');
+        nominator.findNomination(id,function(err, doc){
+            if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
+            var users = doc.users;
+            var usersl = doc.users.length;
+            var winner = users[0];
+            for (var j=1; j<usersl;j++){
+                if (winner.votes < users[j].votes){
+                    winner = users[j];
+                }
+            }
+            res.json(winner);
+            fb.apiCall(
+                'POST',
+                '/'+req.session.user.id+'/feed',
+                {
+                    access_token: req.session.user.access_token,
+                    message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
+                        'crea tu propia nominacion',
+                    name: "Agregar",
+                    link: url + '?invited=' + req.param('id')
+                },
+                function (error, response, body) {
+                    if (error) { log.debug('error posting on voted user'); return; }
+                    log.notice('posted on the added user wall: ' + users[i]._id);
+                }
+            );
+            for (var i=0;i<usersl;i++){
+                fb.apiCall(
+                    'POST',
+                    '/'+users[i]._id+'/feed',
+                    {
+                        access_token: req.session.user.access_token,
+                        message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
+                            'crea tu propia nominacion',
+                        name: "Crear",
+                        link: url
+                    },
+                    function (error, response, body) {
+                        if (error) { log.debug('error posting on voted user'); return; }
+                        log.notice('posted on the user wall: ' + users[i]._id);
+                    }
+                );
+            }
+            nominator.eraseNomination(id, function(err){
+                if (err) { log.debug('error erasing nomination'); return; }
+                log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
+            });
+        });
+    });
+    
 };
