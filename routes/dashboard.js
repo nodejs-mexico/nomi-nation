@@ -153,7 +153,7 @@ module.exports = function(app, log){
                     '/'+voterid+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Votaste por "' + nom.users[index].name + '" en "' + 
+                        message: 'Vote por "' + nom.users[index].name + '" en "' + 
                             nom.name + '" en nomi-nation, vota tu tambien',
                         name: "Votar",
                         link: url + '?invited=' + req.param('id')
@@ -169,7 +169,7 @@ module.exports = function(app, log){
                     '/'+nom.users[index]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Votaron por ti en "' + nom.name + '" en nomi-nation ' +
+                        message: 'Vote por ti en "' + nom.name + '" en nomi-nation ' +
                             'vota tu tambien',
                         name: "Votar",
                         link: url + '?invited=' + req.param('id')
@@ -206,7 +206,7 @@ module.exports = function(app, log){
                             '/'+usersl[i]._id+'/feed',
                             {
                                 access_token: req.session.user.access_token,
-                                message: 'Te agregaron a "' + doc.name + '" en nomi-nation ' +
+                                message: 'Te agregue a "' + doc.name + '" en nomi-nation ' +
                                     'agrega a tus amigos tambien',
                                 name: "Votar",
                                 link: url + '?invited=' + req.param('id')
@@ -223,7 +223,7 @@ module.exports = function(app, log){
                         '/'+usersl._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: 'Te agregaron a "' + doc.name + '" en nomi-nation ' +
+                            message: 'Te agregue a "' + doc.name + '" en nomi-nation ' +
                                 'agrega a tus amigos tambien',
                             name: "Votar",
                             link: url + '?invited=' + req.param('id')
