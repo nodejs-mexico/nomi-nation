@@ -312,7 +312,29 @@ $(function() {
             },
             dataType: 'json'
         });
-    });    
+    });
+    $('#cancel').click(function(ev){
+        ev.preventDefault();
+        var nid = $('.details').attr('nid');
+        $.ajax({
+            type: 'POST',
+            url: '/nominations/end',
+            data: {id : nid},
+            success: function(data){
+                if (!data){ alert('error ending'); /*TODO: show error*/ return;}
+                alert('erased');
+                $('#'+nid).remove();
+                while($('#'+nid).length > 0){
+                    $('#'+nid).remove();
+                }
+                $('.details').hide();
+            },
+            error: function(data){
+                alert('error erasing');
+            },
+            dataType: 'json'
+        });
+    });
     $('.vote').click(vote);
     $('.erase').click(erase);
 });
