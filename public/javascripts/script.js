@@ -313,7 +313,7 @@ $(function() {
             dataType: 'json'
         });
     });
-    $('#cancel').click(function(ev){
+    $('#end').click(function(ev){
         ev.preventDefault();
         var nid = $('.details').attr('nid');
         $.ajax({
