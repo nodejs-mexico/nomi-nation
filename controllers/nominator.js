@@ -57,7 +57,7 @@ NOMINATOR.addUser = function(nomination, user, callback) {
     //TODO: check we dont want more than 10 users per nomination    
     if (user instanceof Array){
         //TODO: check all users in the array in db
-        nomination.users.concat(user);
+        nomination.users = nomination.users.concat(user);
     }else{
         var isPresent = nomination.erased.indexOf(user._id);
         if (isPresent >= 0){ callback(new Error('User can\'t be added'), null); return; }
