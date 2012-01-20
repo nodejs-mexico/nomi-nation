@@ -1,26 +1,26 @@
-//TODO: check voters only one per day
-//TODO: check for dates
 /* Author: mrpix
 */
 var options = {
     ns: { namespaces: ['translation'], defaultNs: 'translation'},
     useLocalStorage: true,
     resGetPath: 'locales/resources.json?lng=__lng__&ns=__ns__',
-    dynamicLoad: true,
-}; 
+    dynamicLoad: true
+};
 $.i18n.init(options, function() { 
     //TODO: add more text
 });    
-// custom css expression for a case-insensitive contains()
+// expresion para buscar texto que contenga cierto termino
 jQuery.expr[':'].Contains = function(a,i,m){
     return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
 };
+// expresion para buscar texto que sea igual a otro
 jQuery.extend(jQuery.expr[':'], { 
      containsExactly: "$(a).text() == m[3]" 
 }); 
+//mostrar mensajes modales
 function showMsg(title, msg, extra){
     var dialog = $( "#dialog-modal" );
-    dialog.attr('title', $.t(title))
+    dialog.attr('title', $.t(title));
     if (extra){
         dialog.find('#msg').text($.t(msg, {winner: extra}));
     }else{
@@ -29,6 +29,7 @@ function showMsg(title, msg, extra){
     dialog.dialog('open');
 }
 $(function() {
+    //instanciar dialogo
     $( "#dialog-modal" ).dialog({
         autoOpen: false,
         modal: true,
@@ -38,7 +39,9 @@ $(function() {
             }
         }
     });
+    //guardamos la lista para futuras referencias
     var list = $('#selectable');
+    //funcion para votar por un usuario
     var vote = function(ev){
         ev.preventDefault();
         var a = $(this);
@@ -66,6 +69,7 @@ $(function() {
             li.find("input").click(checkOne);
         }
     };
+    //funcion para borrar usuario
     var erase = function(ev){
         ev.preventDefault();
         var a = $(this);
@@ -89,6 +93,7 @@ $(function() {
             }
         ).error(function() { showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
     };
+    //cargando amigos del usuario en session
     function loadUsers(next){
         $.getJSON(next || '/friends', function(data) {
             if (data.data.length > 0){
@@ -101,6 +106,7 @@ $(function() {
             }
         }).error(function() { showMsg('dashboard.error', 'dashboard.error_friends'); });
     }
+    //cargando nominaciones del usuario en session, depende del tipo
     function loadNominations(type){
         $.getJSON('/nominations/'+type, function(data) {
             var list = $('#'+type);
@@ -115,6 +121,7 @@ $(function() {
             list.find("input").click(checkOne);
         }).error(function() { showMsg('dashboard.error', 'dashboard.warning_nominations'); });
     }
+    //para q solo se puede seleccionar una nominacion a la vez
     function checkOne(){
         var currentEl = $(this);
         $("input:checked").each(function(){
@@ -129,6 +136,7 @@ $(function() {
         checkbox.attr('checked', !checkbox.attr('checked'));
         showNomination(currentEl.parent().attr('id'), currentEl.parent().attr('type'));
     }
+    //cargar la nominacion y llenar details
     function showNomination(id, type, refresh){
         //TODO: show avatar
         $.getJSON('/nominations/'+id, function(data) {
@@ -185,18 +193,22 @@ $(function() {
             }            
         }).error(function() { showMsg('dashboard.error', 'dashboard.error_showing'); });
     }
+    //actualizar la nominacion en contexto
     $('.refresh').click(function(ev){
         ev.preventDefault();
         showNomination($(this).attr('nid'), $(this).attr('type'), 'refresh');
     });
+    //cargar las nominaciones y usuarios
     loadNominations('mine');
     loadNominations('appear');
     loadNominations('voted');
     loadUsers(null);
+    //viene referenciado, mostrar esa nominacion
     var invited = $('.invited');
     if (invited[0]){
         showNomination(invited.attr('invited'), 'voted');
-    }    
+    }
+    //para filtrar la lista de amigos
     $("#filterinput").change( function () {
         var filter = $(this).val();
         if(filter) {
@@ -212,14 +224,19 @@ $(function() {
         // fire the above change event after every letter
         $(this).change();
     });
+    //inicializar el seleccionador de fecha
     $( "#datep" ).datepicker();
+    //hacer seleccionable la lista de nominaciones
     $( "#selectable" ).selectable();
+    //abrir el dialog de nueva nominacion
     $("#nn").click(function(){
         $( "#dialog-new" ).dialog( "open" );
     });
+    //abrir el dialogo de agregar usuarios
     $("#am").click(function(){
         $( "#dialog-add" ).dialog( "open" );
     });
+    //creamos el dialogo de nueva nominacion
     $( "#dialog-new" ).dialog({
         autoOpen: false,
         height: 300,
@@ -253,6 +270,7 @@ $(function() {
             dialog.find('#datep').val('');
 		}
 	});
+    //creamos el dialog de agregar usuarios
     $( "#dialog-add" ).dialog({
         autoOpen: false,
 		height: 300,
@@ -315,6 +333,7 @@ $(function() {
 			//TODO:
 		}
 	});
+    //para cancelar nominacion
     $('#cancel').click(function(ev){
         ev.preventDefault();
         var nid = $('.details').attr('nid');
@@ -331,12 +350,13 @@ $(function() {
                 }
                 $('.details').hide();
             },
-            error: function(data){
+            error: function(){
                 showMsg('dashboard.error', 'dashboard.error_erasing');
             },
             dataType: 'json'
         });
     });
+    //para terminar nominacion
     $('#end').click(function(ev){
         ev.preventDefault();
         var nid = $('.details').attr('nid');
@@ -353,12 +373,13 @@ $(function() {
                 }
                 $('.details').hide();
             },
-            error: function(data){
+            error: function(){
                 showMsg('dashboard.error', 'dashboard.error_ending');
             },
             dataType: 'json'
         });
     });
+    //para remover al usuario actual de la nominacion
     $('#remove').click(function(ev){
         ev.preventDefault();
         var uid = $(this).attr('uid');
@@ -372,8 +393,9 @@ $(function() {
                     showMsg('dashboard.error', 'dashboard.error_removing');
                 }
             }
-        ).error(function(err) { showMsg('dashboard.error', 'dashboard.error_removing'); }); 
+        ).error(function() { showMsg('dashboard.error', 'dashboard.error_removing'); }); 
     });
+    //escuchar por los clicks en votar y borrar
     $('.vote').click(vote);
     $('.erase').click(erase);
 });
