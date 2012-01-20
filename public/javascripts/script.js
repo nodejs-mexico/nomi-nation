@@ -30,6 +30,7 @@ function showMsg(title, msg){
 }
 $(function() {
     $( "#dialog-modal" ).dialog({
+        autoOpen: false,
         modal: true,
         buttons: {
             Ok: function() {
