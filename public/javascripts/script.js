@@ -322,7 +322,7 @@ $(function() {
             data: {id : nid},
             success: function(data){
                 if (!data){ showMsg('dashboard.error', 'dashboard.error_erasing'); return;}
-                alert('erased');
+                showMsg('dashboard.warning', 'dashboard.warning_erasing');
                 $('#'+nid).remove();
                 while($('#'+nid).length > 0){
                     $('#'+nid).remove();
