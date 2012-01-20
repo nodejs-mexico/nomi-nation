@@ -37,7 +37,8 @@
         "error_friends" : "Can't load friends, try again later",
         "error_erasing_user" : "Can't erase users, try again later",
         "error_voting" : "Can't vote right now, try again later",
-        "warning" : "Warning!!"
+        "warning" : "Warning!!",
+        "warning_erasing" : "Nomination erased"
     },
     "index":{
         "features": "Features",

@@ -37,7 +37,8 @@
         "error_friends" : "No puedo cargar a tus amigos, intentalo mas tarde",
         "error_erasing_user" : "No puedo borrar a este usuario, intentalo mas tarde",
         "error_voting" : "No sirvio la votacion, intentalo mas tarde",
-        "warning" : "Warning!!"
+        "warning" : "Warning!!",
+        "warning_erasing" : "Nominacion borrada"
     },
     "index":{
         "features": "Características",

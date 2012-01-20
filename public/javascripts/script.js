@@ -358,12 +358,12 @@ $(function() {
         });
     });
     $('#remove').click(function(ev){
-        ev.preventDefault();
-        var uid = $(this).attr('uid');
+        ev.preventDefault();        
         var nid = $('.details').attr('nid');
-        $.post("/nominations/eraseuser", { id: nid, type: 'eraseme' },
+        $.post("/nominations/eraseuser", { id: nid, user: 'eraseme' },
             function(data) {
                 if (data){
+                    var uid = $(this).attr('uid');
                     //get the row of the user and erase it
                    $('.details').find('#'+uid).remove();
                 }else{
