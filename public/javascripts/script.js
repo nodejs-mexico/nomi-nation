@@ -169,7 +169,7 @@ $(function() {
                 tr.append('<td class="votes">'+votes+'</td>');
                 var avote = $('<a class=".vote" href="#">'+$.t('dashboard.vote')+'</a>');
                 avote.click(vote);
-                var aerase = $('<a class=".erase" href="#">'+$.t('dashboard.erase')+</a>');
+                var aerase = $('<a class=".erase" href="#">'+$.t('dashboard.erase')+'</a>');
                 aerase.click(erase);
                 var menu = $('<td></td>');
                 menu.append(avote);
