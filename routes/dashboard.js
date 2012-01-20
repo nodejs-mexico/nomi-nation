@@ -283,15 +283,16 @@ module.exports = function(app, log){
                     access_token: req.session.user.access_token,
                     message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
                         'crea tu propia nominacion',
-                    name: "Agregar",
+                    name: "Crear",
                     link: url + '?invited=' + req.param('id')
                 },
                 function (error, response, body) {
                     if (error) { log.debug('error posting on voted user'); return; }
-                    log.notice('posted on the added user wall: ' + users[i]._id);
+                    log.notice('posted on the created user wall: ' + users[i]._id);
                 }
             );
             for (var i=0;i<usersl;i++){
+                if (users[i]._id == req.session.user.id){ continue; }
                 fb.apiCall(
                     'POST',
                     '/'+users[i]._id+'/feed',

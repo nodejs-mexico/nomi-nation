@@ -38,7 +38,9 @@
         "error_erasing_user" : "Can't erase users, try again later",
         "error_voting" : "Can't vote right now, try again later",
         "warning" : "Warning!!",
-        "warning_erasing" : "Nomination erased"
+        "warning_erasing" : "Nomination erased",
+        "create_new" : "Create new nomination",
+        "all_required" : "All fields required"
     },
     "index":{
         "features": "Features",

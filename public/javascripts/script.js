@@ -1,8 +1,5 @@
 //TODO: check voters only one per day
-//TODO: test session to mongo
-//TODO: test erase me btn
 //TODO: check for dates
-//TODO: strings to: $.t('dashboard.end_date')
 /* Author: mrpix
 */
 var options = {

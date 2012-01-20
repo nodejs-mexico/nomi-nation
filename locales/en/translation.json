@@ -38,7 +38,9 @@
         "error_erasing_user" : "No puedo borrar a este usuario, intentalo mas tarde",
         "error_voting" : "No sirvio la votacion, intentalo mas tarde",
         "warning" : "Warning!!",
-        "warning_erasing" : "Nomination erased"
+        "warning_erasing" : "Nomination erased",
+        "create_new" : "Create new nomination",
+        "all_required" : "All fields required"
     },
     "index":{
         "features": "Features",
