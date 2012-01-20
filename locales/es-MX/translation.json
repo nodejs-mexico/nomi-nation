@@ -38,7 +38,10 @@
         "error_erasing_user" : "No puedo borrar a este usuario, intentalo mas tarde",
         "error_voting" : "No sirvio la votacion, intentalo mas tarde",
         "warning" : "Warning!!",
-        "warning_erasing" : "Nominacion borrada"
+        "warning_erasing" : "Nominacion borrada",
+        "create_new" : "Crear nominacion",
+        "all_required" : "Todos los campos son requeridos",
+        "win" : "_winner_ Gano la nominacion"
     },
     "index":{
         "features": "Características",

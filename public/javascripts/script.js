@@ -4,10 +4,9 @@
 */
 var options = {
     ns: { namespaces: ['translation'], defaultNs: 'translation'},
-    useLocalStorage: false,
+    useLocalStorage: true,
     resGetPath: 'locales/resources.json?lng=__lng__&ns=__ns__',
     dynamicLoad: true,
-    sendMissing: true
 }; 
 $.i18n.init(options, function() { 
     //TODO: add more text
@@ -19,10 +18,14 @@ jQuery.expr[':'].Contains = function(a,i,m){
 jQuery.extend(jQuery.expr[':'], { 
      containsExactly: "$(a).text() == m[3]" 
 }); 
-function showMsg(title, msg){
+function showMsg(title, msg, extra){
     var dialog = $( "#dialog-modal" );
-    dialog.attr('title', $.t(title));
-    dialog.find('#msg').text($.t(msg));
+    dialog.attr('title', $.t(title))
+    if (extra){
+        dialog.find('#msg').text($.t(msg, {winner: extra}));
+    }else{
+        dialog.find('#msg').text($.t(msg));
+    }    
     dialog.dialog('open');
 }
 $(function() {
@@ -90,7 +93,7 @@ $(function() {
         $.getJSON(next || '/friends', function(data) {
             if (data.data.length > 0){
                 $.each(data.data, function(key, value){
-                    list.append('<li class="ui-state-default" id="'+value.id+'"><a>'+value.name+'</a></li>');
+                    list.append('<li class="ui-state-default" id="'+value.id+'"><img width="20px" src="https://graph.facebook.com/'+value.id+'/picture"/><a>'+value.name+'</a></li>');
                 });
                 loadUsers(data.paging.next);
             }else{
@@ -163,6 +166,7 @@ $(function() {
                 var name = data.users[i].name;
                 var votes = data.users[i].votes;
                 var tr = $('<tr id="'+id+'"></tr>');
+                tr.append('<td class="pic"><img width="20px" src="https://graph.facebook.com/'+id+'/picture"/></td>');
                 tr.append('<td class="name">'+name+'</td>');
                 tr.append('<td class="votes">'+votes+'</td>');
                 var avote = $('<a class=".vote" href="#">'+$.t('dashboard.vote')+'</a>');
@@ -281,6 +285,7 @@ $(function() {
                                 var id = value._id;
                                 var name = value.name;
                                 var tr = $('<tr id="'+id+'"></tr>');
+                                tr.append('<td class="pic"><img width="20px" src="https://graph.facebook.com/'+id+'/picture"/></td>');
                                 tr.append('<td class="name">'+name+'</td>');
                                 tr.append('<td class="votes">0</td>');
                                 var avote = $('<a class=".vote" href="#">'+$.t('dashboard.vote')+'</a>');
@@ -341,7 +346,7 @@ $(function() {
             data: {id : nid},
             success: function(data){
                 if (!data){ showMsg('dashboard.error', 'dashboard.error_ending'); return;}
-                alert('erased');
+                showMsg('dashboard.warning','dashboard.win', data.name);
                 $('#'+nid).remove();
                 while($('#'+nid).length > 0){
                     $('#'+nid).remove();

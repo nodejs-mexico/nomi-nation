@@ -40,7 +40,8 @@
         "warning" : "Warning!!",
         "warning_erasing" : "Nominacion borrada",
         "create_new" : "Crear nominacion",
-        "all_required" : "Todos los campos son requeridos"
+        "all_required" : "Todos los campos son requeridos",
+        "win" : "_winner_ Gano la nominacion"
     },
     "index":{
         "features": "Características",

@@ -18,9 +18,7 @@ Db.connect("mongodb://nominator:nominat0r@ds029257.mongolab.com:29257/nomination
 var app = module.exports = express.createServer();
 
 i18next.init({
-    ns: { namespaces: ['translation'], defaultNs: 'translation'},
-    resSetPath: 'locales/__lng__/new.__ns__.json',
-    saveMissing: true
+    ns: { namespaces: ['translation'], defaultNs: 'translation'}    
 });
 
 // Configuration

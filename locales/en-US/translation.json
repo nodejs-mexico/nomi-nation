@@ -40,7 +40,8 @@
         "warning" : "Warning!!",
         "warning_erasing" : "Nomination erased",
         "create_new" : "Create new nomination",
-        "all_required" : "All fields required"
+        "all_required" : "All fields required",
+        "win" : "_winner_ Won the nomination"
     },
     "index":{
         "features": "Features",
