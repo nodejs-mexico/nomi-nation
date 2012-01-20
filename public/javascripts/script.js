@@ -93,7 +93,7 @@ $(function() {
         $.getJSON(next || '/friends', function(data) {
             if (data.data.length > 0){
                 $.each(data.data, function(key, value){
-                    list.append('<li class="ui-state-default" id="'+value.id+'"><img width="20px" src="https://graph.facebook.com/'+value.id+'/picture"/><a>'+value.name+'</a></li>');
+                    list.append('<li class="ui-state-default" id="'+value.id+'"><img width="30px" src="https://graph.facebook.com/'+value.id+'/picture"/><a>'+value.name+'</a></li>');
                 });
                 loadUsers(data.paging.next);
             }else{
