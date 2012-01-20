@@ -14,5 +14,10 @@
     , "jsdom" : "0.2.10"
     , "i18next" : "0.5.1"
     , "mongodb" : "0.9.8-1"
-  }
+  },
+  "licenses": [
+    { "type": "agpl",
+      "url": "http://www.gnu.org/licenses/agpl.html"
+    }
+  ]
 }
