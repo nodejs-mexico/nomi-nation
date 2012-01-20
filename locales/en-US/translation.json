@@ -23,7 +23,21 @@
         "remove_me" : "Remove me",
         "cancel" : "Cancel Nomination",
         "end_date" : "End date:",
-        "refresh" : "Refresh"
+        "refresh" : "Refresh",
+        "error" : "Error",
+        "error_removing" : "Can't erase nomination",
+        "error_ending" : "Cant end nomination",
+        "error_erasing" : "Can't cancel nomination",
+        "error_adduser" : "Can't add this user",
+        "warning_creating" : "Can't create the nomination, try again later",
+        "error_showing" : "Can't show this nomination, try again later",
+        "warning_erased" : "Ups, this nomination is erased or already finished",
+        "warning_nominations" : "Can't load your nominations, try again later",
+        "warning_zarro" : "You don't have nominations, create one :)",
+        "error_friends" : "Can't load friends, try again later",
+        "error_erasing_user" : "Can't erase users, try again later",
+        "error_voting" : "Can't vote right now, try again later",
+        "warning" : "Warning!!"
     },
     "index":{
         "features": "Features",

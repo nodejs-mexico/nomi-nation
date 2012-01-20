@@ -59,7 +59,7 @@
                                         a(href="#") #{t('dashboard.erase')}
                 .btns
                     button.myButton#end #{t('dashboard.end_nomination')}
-                    button.myButton#remove #{t('dashboard.remove_me')}
+                    button.myButton#remove(uid="#{user.id}") #{t('dashboard.remove_me')}
                     button.myButton#cancel #{t('dashboard.cancel')}
         .images
         .logo logo
@@ -68,16 +68,16 @@
 #footer-container
     footer.wrapper
 
-#dialog-new(title="Create new nomination")
-    p.validateTips All form fields are required
+#dialog-new(title="#{t('dashboard.create_new')}")
+    p.validateTips #{t('dashboard.all_required')}
     form
         fieldset
-            label.forml(for="name") Name:
+            label.forml(for="name") #{t('dashboard.name')}
             input#name.text.ui-widget-content.ui-corner-all(type="text", name="name")
-            label.forml(for="datep") End date:
+            label.forml(for="datep") #{t('dashboard.end_date')}
             input#datep.text.ui-widget-content.ui-corner-all(type="text", name="datep")
 
-#dialog-add(title="Add friends")
+#dialog-add(title="#{t('dashboard.add_friends')}")
     #addAttr
     form#filterform(action="#")
         input#filterinput(type="text")
@@ -85,3 +85,6 @@
     form
         fieldset
             ol#selectable
+
+#dialog-modal(title="#{t('dashboard.error')}")
+    p#msg 

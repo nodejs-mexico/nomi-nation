@@ -23,7 +23,21 @@
         "remove_me" : "Quitarme",
         "cancel" : "Cancelar nominaci&oacute;n",
         "end_date" : "Fecha final:",
-        "refresh" : "Actualizar"
+        "refresh" : "Actualizar",
+        "error" : "Error",
+        "error_removing" : "Error el borrar la nominacion",
+        "error_ending" : "No puedo terminar la nominacion ahora, intentalo mas tarde",
+        "error_erasing" : "No puedo cancelar la nominacion, intentalo mas tarde",
+        "error_adduser" : "No se puede agregar este usuario",
+        "warning_creating" : "No puedo crear la nominacion, intentalo mas tarde",
+        "error_showing" : "No puedo mostrar esta nominacion, intentalo mas tarde",
+        "warning_erased" : "Ups, la nominacion ah sido borrada o ya termino",
+        "warning_nominations" : "No puedo cargar tus nominaciones, intentalo mas tarde",
+        "warning_zarro" : "No tienes nominaciones, crea una :)",
+        "error_friends" : "No puedo cargar a tus amigos, intentalo mas tarde",
+        "error_erasing_user" : "No puedo borrar a este usuario, intentalo mas tarde",
+        "error_voting" : "No sirvio la votacion, intentalo mas tarde",
+        "warning" : "Warning!!"
     },
     "index":{
         "features": "Características",

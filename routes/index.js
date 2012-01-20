@@ -17,7 +17,7 @@ module.exports = function(app, log){
      * Logout page
      */
     app.get('/logout', function(req, res){
-        req.session.destroy(function(err){ res.redirect('/') });
+        req.session.destroy(function(){ res.redirect('/'); });
     });
         
     /**

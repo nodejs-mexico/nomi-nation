@@ -1,3 +1,8 @@
+//TODO: check voters only one per day
+//TODO: test session to mongo
+//TODO: test erase me btn
+//TODO: check for dates
+//TODO: strings to: $.t('dashboard.end_date')
 /* Author: mrpix
 */
 var options = {
@@ -17,7 +22,21 @@ jQuery.expr[':'].Contains = function(a,i,m){
 jQuery.extend(jQuery.expr[':'], { 
      containsExactly: "$(a).text() == m[3]" 
 }); 
-$(function() {    
+function showMsg(title, msg){
+    var dialog = $( "#dialog-modal" );
+    dialog.attr('title', $.t(title));
+    dialog.find('#msg').text($.t(msg));
+    dialog.dialog('open');
+}
+$(function() {
+    $( "#dialog-modal" ).dialog({
+        modal: true,
+        buttons: {
+            Ok: function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
     var list = $('#selectable');
     var vote = function(ev){
         ev.preventDefault();
@@ -33,11 +52,10 @@ $(function() {
                     var votes = tr.find('.votes');
                     votes.html(data);
                 }else{
-                    alert("error");                            
+                    showMsg('dashboard.error', 'dashboard.error_voting');
                 }
             }
-        ).error(function(err) {console.log(err); alert("error"); });
-        //TODO: check if exists already        
+        ).error(function() {showMsg('dashboard.error', 'dashboard.error_voting'); });
         var list = $('#voted');
         var found = list.find('li:containsExactly('+name+')');
         if (found.length < 1){
@@ -65,10 +83,10 @@ $(function() {
                 if (data){
                    tr.remove();
                 }else{
-                    alert("error");                            
+                    showMsg('dashboard.error', 'dashboard.error_erasing_user');
                 }
             }
-        ).error(function(err) { alert("error erasing user"); });        
+        ).error(function() { showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
     };
     function loadUsers(next){
         $.getJSON(next || '/friends', function(data) {
@@ -78,15 +96,15 @@ $(function() {
                 });
                 loadUsers(data.paging.next);
             }else{
-                //console.log('finish');
+                return;
             }
-        }).error(function() { alert("error"); });
+        }).error(function() { showMsg('dashboard.error', 'dashboard.error_friends'); });
     }
     function loadNominations(type){
         $.getJSON('/nominations/'+type, function(data) {
             var list = $('#'+type);
             if (data.length < 1 ){
-                    //console.log("no nominations");
+                //showMsg('dashboard.warning', 'dashboard.warning_zarro');
             }else{
                 $.each(data, function(key, value){
                     list.append('<li id="'+value._id+'" type="'+type+'"><input type="checkbox" /><label>'+value.name+'</label></li>');
@@ -94,7 +112,7 @@ $(function() {
             }
             list.find("label").click(checkOne);
             list.find("input").click(checkOne);
-        }).error(function() { alert("error"); });
+        }).error(function() { showMsg('dashboard.error', 'dashboard.warning_nominations'); });
     }
     function checkOne(){
         var currentEl = $(this);
@@ -111,8 +129,12 @@ $(function() {
         showNomination(currentEl.parent().attr('id'), currentEl.parent().attr('type'));
     }
     function showNomination(id, type, refresh){
-        //TODO: show avata       
+        //TODO: show avatar
         $.getJSON('/nominations/'+id, function(data) {
+            if (!data){
+                //alert('Du! nominacion ya no existe o termino :(');
+                showMsg('dashboard.warning', 'dashboard.warning_erased');
+            }
             var details = $('.details');
             details.attr('nid', data._id);
             details.find('legend').html(data.name);
@@ -145,9 +167,9 @@ $(function() {
                 var tr = $('<tr id="'+id+'"></tr>');
                 tr.append('<td class="name">'+name+'</td>');
                 tr.append('<td class="votes">'+votes+'</td>');
-                var avote = $('<a class=".vote" href="#">Vote</a>');
+                var avote = $('<a class=".vote" href="#">'+$.t('dashboard.vote')+'</a>');
                 avote.click(vote);
-                var aerase = $('<a class=".erase" href="#">Erase</a>');
+                var aerase = $('<a class=".erase" href="#">'+$.t('dashboard.erase')+</a>');
                 aerase.click(erase);
                 var menu = $('<td></td>');
                 menu.append(avote);
@@ -159,7 +181,7 @@ $(function() {
             if (!refresh){
                 details.show('slide');
             }            
-        }).error(function() { alert("error"); });
+        }).error(function() { showMsg('dashboard.error', 'dashboard.error_showing'); });
     }
     $('.refresh').click(function(ev){
         ev.preventDefault();
@@ -178,10 +200,10 @@ $(function() {
         if(filter) {
             // this finds all links in a list that contain the input,
             // and hide the ones not containing the input while showing the ones that do
-            list.find("a:not(:Contains(" + filter + "))").parent().slideUp();
-            list.find("a:Contains(" + filter + ")").parent().slideDown();
+            list.find("a:not(:Contains(" + filter + "))").parent().hide();
+            list.find("a:Contains(" + filter + ")").parent().show();
         } else {
-            list.find("li").slideDown();
+            list.find("li").show();
         }
         return false;
     }).keyup( function () {
@@ -198,10 +220,11 @@ $(function() {
     });
     $( "#dialog-new" ).dialog({
         autoOpen: false,
-		height: 300,
+        height: 300,
 		width: 450,
 		modal: true,
 		buttons: {
+            //TODO: put a t string :S
 			"Create a nomination": function() {
                 var dialog = $(this);
                 var name = dialog.find('#name').val();
@@ -213,11 +236,10 @@ $(function() {
                         list.append(li);
                         li.find("label").click(checkOne);
                         li.find("input").click(checkOne);
-                        //showNomination(data._id);
                         li.find("label").trigger('click');
                         dialog.dialog( "close" );
                     }
-                ).error(function() { alert("error"); });
+                ).error(function() { showMsg('dashboard.error', 'dashboard.warning_creating'); });
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -238,7 +260,6 @@ $(function() {
 			"Add friend(s)": function() {
                 var dialog = $(this);
                 var tbody = $('.details').find('.userst').find('tbody');
-                //TODO: add to db
                 var users = [];
                 var userp;
                 $('#selectable').find('.ui-selected').each(function(key, value){
@@ -264,9 +285,9 @@ $(function() {
                                 var tr = $('<tr id="'+id+'"></tr>');
                                 tr.append('<td class="name">'+name+'</td>');
                                 tr.append('<td class="votes">0</td>');
-                                var avote = $('<a class=".vote" href="#">Vote</a>');
+                                var avote = $('<a class=".vote" href="#">'+$.t('dashboard.vote')+'</a>');
                                 avote.click(vote);
-                                var aerase = $('<a class=".erase" href="#">Erase</a>');
+                                var aerase = $('<a class=".erase" href="#">'+$.t('dashboard.erase')+'</a>');
                                 aerase.click(erase);
                                 var menu = $('<td></td>');
                                 menu.append(avote);
@@ -278,10 +299,10 @@ $(function() {
                             dialog.dialog( "close" );
                         }else{
                             dialog.dialog( "close" );
-                            alert("error");                            
+                            showMsg('dashboard.error', 'dashboard.error_adduser');
                         }
                     }
-                ).error(function() { alert("error"); });				
+                ).error(function() { showMsg('dashboard.error', 'dashboard.error_adduser'); });				
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -299,7 +320,7 @@ $(function() {
             url: '/nominations/erase',
             data: {id : nid},
             success: function(data){
-                if (!data){ alert('error erasing'); /*TODO: show error*/ return;}
+                if (!data){ showMsg('dashboard.error', 'dashboard.error_erasing'); return;}
                 alert('erased');
                 $('#'+nid).remove();
                 while($('#'+nid).length > 0){
@@ -308,7 +329,7 @@ $(function() {
                 $('.details').hide();
             },
             error: function(data){
-                alert('error erasing');
+                showMsg('dashboard.error', 'dashboard.error_erasing');
             },
             dataType: 'json'
         });
@@ -321,7 +342,7 @@ $(function() {
             url: '/nominations/end',
             data: {id : nid},
             success: function(data){
-                if (!data){ alert('error ending'); /*TODO: show error*/ return;}
+                if (!data){ showMsg('dashboard.error', 'dashboard.error_ending'); return;}
                 alert('erased');
                 $('#'+nid).remove();
                 while($('#'+nid).length > 0){
@@ -330,10 +351,25 @@ $(function() {
                 $('.details').hide();
             },
             error: function(data){
-                alert('error erasing');
+                showMsg('dashboard.error', 'dashboard.error_ending');
             },
             dataType: 'json'
         });
+    });
+    $('#remove').click(function(ev){
+        ev.preventDefault();
+        var uid = $(this).attr('uid');
+        var nid = $('.details').attr('nid');
+        $.post("/nominations/eraseuser", { id: nid, type: 'eraseme' },
+            function(data) {
+                if (data){
+                    //get the row of the user and erase it
+                   $('.details').find('#'+uid).remove();
+                }else{
+                    showMsg('dashboard.error', 'dashboard.error_removing');
+                }
+            }
+        ).error(function(err) { showMsg('dashboard.error', 'dashboard.error_removing'); }); 
     });
     $('.vote').click(vote);
     $('.erase').click(erase);

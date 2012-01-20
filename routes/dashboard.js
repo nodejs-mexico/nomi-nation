@@ -9,7 +9,7 @@ function findIndexByKeyValue(obj, key, value)
     var l = obj.length;
     for (var i = 0; i < l; i++) {
         if (obj[i][key] == value) {
-    		return i;
+            return i;
 		}
 	}
 	return -1;
@@ -145,7 +145,7 @@ module.exports = function(app, log){
             if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
             nominator.vote(doc, voterid, userid, function(err, nom){
                 if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
-                var index = findIndexByKeyValue(nom.users, "_id", req.param('userid'));                
+                var index = findIndexByKeyValue(nom.users, "_id", req.param('userid'));
                 res.json(nom.users[index].votes);
                 //post to my wall that i voted
                 fb.apiCall(
@@ -247,7 +247,11 @@ module.exports = function(app, log){
         var id = req.param('id');
         //add a friend, try to write to the user wall and local
         nominator.findNomination(id,function(err, doc){
-            if (err) { log.debug('error getting nominations'); res.json(null); return; }
+            if (err) { log.debug('error getting nominations'); res.json(null); return; }            
+            if (user === 'eraseme'){
+                var index = findIndexByKeyValue(doc.users, "_id", req.session.user.id);
+                user = doc.users[index];
+            }
             nominator.eraseUser(doc, user, function(err){
                 if (err) { log.debug('error erasing nominations'); res.json(null); return; }
                 res.json(true);

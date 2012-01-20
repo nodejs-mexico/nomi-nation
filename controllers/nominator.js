@@ -79,7 +79,6 @@ NOMINATOR.eraseUser = function(nomination, user, callback) {
     nomination.users.remove(user); //erased from the users list
     nomination.erased.push(user._id); //add to the erased so we dont add them again
     nomination.save(callback);
-    //Nomination.update({_id :nomination.id}, {users: nomination.users, erased: nomination.erased}, callback);
 };
 
 /** 
