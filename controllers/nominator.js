@@ -30,21 +30,39 @@ function findIndexByKeyValue(obj, key, value)
 NOMINATOR.vote = function(nomination, voterId, userId, callback) {
     //TODO: check we dont want more than 10 users per nomination
     var isPresent = -1;
+    var oldEnough = true;
     try {
         isPresent = nomination.voters.indexOf(voterId);
+        if (isPresent !== -1) {
+          var date    = new Date(),
+              oldDate = new Date(nomination.votersDate[voterId] || new Date());
+              console.log(oldDate);
+          var day = (date-oldDate);
+          if (1000*3600*24 > day){
+            oldEnough = false;
+          }
+        } else {
+            oldEnough = true;
+        }
     }
     catch (e){
         isPresent = -1;
     }
     if (isPresent < 0){
         nomination.voters.push(voterId);
+        nomination.votersDate[voterId] = new Date();
     }
     //TODO: change to an actual mongo function
     //TODO: push to voters
-    var index = findIndexByKeyValue(nomination.users, "_id", userId);
-    nomination.users[index].votes += 1;
-    nomination.save(callback);
-    //Nomination.update({_id :nomination.id}, {users: nomination.users}, callback);
+    if (oldEnough){
+      var index = findIndexByKeyValue(nomination.users, "_id", userId);
+      nomination.votersDate[voterId] = new Date();
+      nomination.users[index].votes += 1;
+      nomination.save(callback);
+      //Nomination.update({_id :nomination.id}, {users: nomination.users}, callback);
+    } else {
+        callback(new Error('No Old Enough'),null);
+    }
 };
 
 /** 

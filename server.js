@@ -41,6 +41,7 @@ app.configure('production', function() {
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
+    app.use(express.logger('dev'))
     app.use(express.bodyParser());
     app.use(i18next.handle);
     app.use(express.methodOverride());
@@ -60,7 +61,7 @@ require('./routes/index')(app, log);
 require('./routes/dashboard')(app, log);
 
 if (!module.parent) {
-    app.listen(process.env.PORT || 3000);
+    app.listen(process.env.PORT || 80);
     console.log("Express server listening on port %d in %s mode", 
         app.address().port, app.settings.env);
 }

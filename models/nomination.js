@@ -24,6 +24,7 @@ function defineModels(mongoose, fn) {
         'endDate' : Date, //when this nomination is going to end
         'users' : [User], //users added to this nomination
         'voters' : [String], //all the dudes that vote this nomination
+        'votersDate':{type:Array, default:[{}]},
         'category' : String,
         'sub_cat' : String,
         'active' : Boolean, //nomination finished
