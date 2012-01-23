@@ -23,8 +23,7 @@ function defineModels(mongoose, fn) {
         'owner' : String, //who is the owner of the nomination
         'endDate' : Date, //when this nomination is going to end
         'users' : [User], //users added to this nomination
-        'voters' : [String], //all the dudes that vote this nomination
-        'votersDate':{type:Array, default:[{}]},
+        'voters':{type:Array, default:[]}, //all the dudes that vote this nomination
         'category' : String,
         'sub_cat' : String,
         'active' : Boolean, //nomination finished

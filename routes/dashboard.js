@@ -268,76 +268,81 @@ module.exports = function(app, log){
         var id = req.param('id');
         nominator.findNomination(id,function(err, doc){
             if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
+            console.log(doc);
             var users = doc.users;
             var usersl = doc.users.length;
             var voters = doc.voters;
             var votersl = doc.voters.length;
-            var winner = users[0];
-            for (var j=1; j<usersl;j++){
-                if (winner.votes < users[j].votes){
-                    winner = users[j];
+            console.log(users.length)
+            if (users.length > 0){
+                var winner = users[0];
+                for (var j=1; j<usersl;j++){
+                    if (winner.votes < users[j].votes){
+                        winner = users[j];
+                    }
                 }
-            }
-            res.json(winner);
-            fb.apiCall(
-                'POST',
-                '/'+req.session.user.id+'/feed',
-                {
-                    access_token: req.session.user.access_token,
-                    message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
-                        'crea tu propia nominacion',
-                    name: "Crear",
-                    link: url + '?invited=' + req.param('id')
-                },
-                function (error, response, body) {
-                    if (error) { log.debug('error posting on voted user'); return; }
-                    log.notice('posted on the created user wall: ' + req.session.user.id);
-                }
-            );
-            for (var i=0;i<usersl;i++){
-                if (users[i]._id == req.session.user.id){ continue; }
+                res.json(winner);
                 fb.apiCall(
                     'POST',
-                    '/'+users[i]._id+'/feed',
+                    '/'+req.session.user.id+'/feed',
                     {
                         access_token: req.session.user.access_token,
                         message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
                             'crea tu propia nominacion',
                         name: "Crear",
-                        link: url
+                        link: url + '?invited=' + req.param('id')
                     },
                     function (error, response, body) {
                         if (error) { log.debug('error posting on voted user'); return; }
-                        log.notice('posted on the user wall: ' + users[i]._id);
+                        log.notice('posted on the created user wall: ' + req.session.user.id);
                     }
                 );
-            }
+                for (var i=0;i<usersl;i++){
+                    if (users[i]._id == req.session.user.id){ continue; }
+                    fb.apiCall(
+                        'POST',
+                        '/'+users[i]._id+'/feed',
+                        {
+                            access_token: req.session.user.access_token,
+                            message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
+                                'crea tu propia nominacion',
+                            name: "Crear",
+                            link: url
+                        },
+                        function (error, response, body) {
+                            if (error) { log.debug('error posting on voted user'); return; }
+                            log.notice('posted on the user wall: ' + (users[i]._id || 1));
+                        }
+                    );
+                }
+                for (var i=0;i<votersl;i++){
+                    if (voters[i]._id == req.session.user.id){ continue; }
+                    fb.apiCall(
+                        'POST',
+                        '/'+voters[i]._id+'/feed',
+                        {
+                            access_token: req.session.user.access_token,
+                            message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
+                                'crea tu propia nominacion',
+                            name: "Crear",
+                            link: url
+                        },
+                        function (error, response, body) {
+                            if (error) { log.debug('error posting on voted user'); return; }
+                            log.notice('posted on the user wall: ' + (voters[i]._id || 0));
+                        }
+                    );
+                }
+            } 
             nominator.eraseNomination(id, function(err){
                 if (err) { log.debug('error erasing nomination'); return; }
                 log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
             });
-            for (var i=0;i<votersl;i++){
-                if (voters[i]._id == req.session.user.id){ continue; }
-                fb.apiCall(
-                    'POST',
-                    '/'+voters[i]._id+'/feed',
-                    {
-                        access_token: req.session.user.access_token,
-                        message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
-                            'crea tu propia nominacion',
-                        name: "Crear",
-                        link: url
-                    },
-                    function (error, response, body) {
-                        if (error) { log.debug('error posting on voted user'); return; }
-                        log.notice('posted on the user wall: ' + voters[i]._id);
-                    }
-                );
-            }
             nominator.eraseNomination(id, function(err){
                 if (err) { log.debug('error erasing nomination'); return; }
                 log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
             });
+            try { res.json('_winner_');} catch(e){}
         });
     });
     
