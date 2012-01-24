@@ -293,6 +293,7 @@ label{
 .loading{
     text-align: center;
     float: left;
+    width: 14px;
 }
 .exit{
     float: right;

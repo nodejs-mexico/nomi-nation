@@ -69,7 +69,7 @@ function prettyDate(a) {
         [47304E5, "1 milenio"]
     ],
         e = ("" + a).replace(/-/g, "/").replace(/[TZ]/g, " "),
-        n = new Date,
+        n = new Date(),
         e = (n - new Date(e) + n.getTimezoneOffset() * 0) / 1E3,
         n = "Hace ",
         l = 0,
