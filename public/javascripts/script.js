@@ -233,6 +233,21 @@ $(function() {
         // fire the above change event after every letter
         $(this).change();
     });
+    $("#filterinputi").change( function () {
+        var filter = $(this).val();
+        if(filter) {
+            // this finds all links in a list that contain the input,
+            // and hide the ones not containing the input while showing the ones that do
+            listi.find("a:not(:Contains(" + filter + "))").parent().hide();
+            listi.find("a:Contains(" + filter + ")").parent().show();
+        } else {
+            listi.find("li").show();
+        }
+        return false;
+    }).keyup( function () {
+        // fire the above change event after every letter
+        $(this).change();
+    });
     //inicializar el seleccionador de fecha
     $( "#datep" ).datepicker();
     //hacer seleccionable la lista de usuarios

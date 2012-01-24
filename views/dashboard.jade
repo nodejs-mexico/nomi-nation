@@ -6,7 +6,7 @@
             a#nn(href="#")= t('dashboard.new_nomination')
         .loading 
             img(src="/images/ajax-loader.gif")
-        form#sf
+        form#sf(action="#")
             input.search(type="text", placeholder="Search")
         div
             a.invite(href="#") Invite
@@ -94,8 +94,8 @@
             ol#selectable
 
 #dialog-invite(title="#{t('dashboard.invite_friends')}")
-    form#filterform(action="#")
-        input#filterinput(type="text")
+    form#filterformi(action="#")
+        input#filterinputi(type="text")
     br
     form
         fieldset
