@@ -288,7 +288,7 @@ label{
 }
 .new, .search, .invite{
     float: left;
-    margin-right: 10px;
+    margin-right: 12px;
 }
 .loading{
     text-align: center;
