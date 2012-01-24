@@ -386,12 +386,13 @@ module.exports = function(app, log){
                         }
                     );
                 }
-            } 
+            }else{
+                res.json(true);
+            }
             nominator.eraseNomination(id, function(err){
                 if (err) { log.debug('error erasing nomination'); return; }
                 log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
             });
-            res.json(true);
         });
     });
     
