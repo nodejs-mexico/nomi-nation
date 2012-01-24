@@ -83,13 +83,14 @@ NOMINATOR.vote = function(nomination, voterId, userId, callback) {
     //TODO: check we dont want more than 10 users per nomination
     var isPresent = -1;
     var oldEnough = true;
+    var oldDate;
     try {
         isPresent = presence(nomination.voters, voterId);
         if (isPresent !== -1) {
-              oldDate = prettyDate(getDate(nomination.voters, voterId).toISOString()),
-          if (oldDate.search('menos de un dia') !== -1){
-            oldEnough = false;
-          }
+            oldDate = prettyDate(getDate(nomination.voters, voterId).toISOString());
+            if (oldDate.search('menos de un dia') !== -1){
+                oldEnough = false;
+            }
         } 
     }
     catch (e){

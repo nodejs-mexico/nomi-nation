@@ -393,11 +393,11 @@ $(function() {
                             dialog.dialog( "close" );
                         }else{
                             dialog.dialog( "close" );
-                            showMsg('dashboard.error', 'dashboard.error_adduser');
+                            showMsg('dashboard.error', 'dashboard.warning_invited');
                         }
                         $('.loading').hide();
                     }
-                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_adduser'); });				
+                ).error(function() { $('.loading').hide(); showMsg('dashboard.warning', 'dashboard.warning_invited'); });				
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
