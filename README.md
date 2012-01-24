@@ -30,3 +30,11 @@ Si quieres contribuir, asegurate de instalar `nomi-nation` localmente siguiente 
   Copyright (C) 2011  Ivan Torres -MrPix
 
   See license
+
+## Contribuidores
+
+  Alejandro Morales Awesome coder, nodejshispano owner [github](https://github.com/alejandromg)
+  Lupita solis Apoyo Moral y ayuda en diseño/funcionalidad
+  Oscar Valerio Ayuda en funcionalidad, idea original
+  Alejandro Y Sofia Galvan, pruebas y ayuda en diseño
+  Otros beta testers :)
