@@ -286,7 +286,7 @@ label{
     float: left;
     display: none;
 }
-.new{
+.new, .search, .invite{
     float: left;
 }
 .loading{

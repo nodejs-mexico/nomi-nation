@@ -418,7 +418,7 @@ $(function() {
     $('.vote').click(vote);
     $('.erase').click(erase);
     $('#sf').submit(function(){
-        var searchTerm = $('#sf').find('.searchbox').val();
+        var searchTerm = $('#sf').find('.search').val();
         if (searchTerm){
             $('.loading').show();
             $.post("/nominations/search", { term: searchTerm },
