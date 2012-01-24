@@ -1,3 +1,4 @@
+//Copyright (C) 2011  Ivan Torres -MrPix
 function defineModels(mongoose, fn) {
     var Schema = mongoose.Schema,
         Nomination, User;

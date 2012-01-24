@@ -15,7 +15,9 @@ head
   // CSS
   link(rel="stylesheet", href="/stylesheets/style.css", type="text/css")
   link(rel="stylesheet", href="/stylesheets/jquery-ui.css", type="text/css")
-  
+  // [if lt IE 9]
+      script(src="http://html5shiv.googlecode.com/svn/trunk/html5.js")
+    //[endif]
 body
   != body
 

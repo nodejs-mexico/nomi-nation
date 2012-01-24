@@ -1,3 +1,4 @@
+//Copyright (C) 2011  Ivan Torres -MrPix
 /* Author: mrpix
 */
 var options = {

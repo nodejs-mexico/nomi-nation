@@ -1,3 +1,4 @@
+//Copyright (C) 2011  Ivan Torres -MrPix
 var mongoose = require('mongoose'), 
     models = require('../models/nomination.js'),
     Nomination, db;
