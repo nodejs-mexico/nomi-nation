@@ -237,6 +237,7 @@ module.exports = function(app, log){
                 }
             );
         }
+        res.json(true);
     });
      
     /**
