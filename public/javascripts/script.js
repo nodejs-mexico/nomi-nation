@@ -44,6 +44,7 @@ $(function() {
     var list = $('#selectable');
     //funcion para votar por un usuario
     var vote = function(ev){
+        $('.loading').show();
         ev.preventDefault();
         var a = $(this);
         var tr = a.parent().parent();
@@ -53,25 +54,26 @@ $(function() {
         $.post("/nominations/vote", { id: nid, userid: id },
             function(data) {
                 if (data){
-                    console.log(data);
                     var votes = tr.find('.votes');
                     votes.html(data);
+                    var list = $('#voted');
+                    var found = list.find('li:containsExactly('+name+')');
+                    if (found.length < 1){
+                        var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
+                        list.append(li);
+                        li.find("label").click(checkOne);
+                        li.find("input").click(checkOne);
+                    }
                 }else{
                     showMsg('dashboard.error', 'dashboard.error_voting');
                 }
+                $('.loading').hide();
             }
-        ).error(function() {showMsg('dashboard.error', 'dashboard.error_voting'); });
-        var list = $('#voted');
-        var found = list.find('li:containsExactly('+name+')');
-        if (found.length < 1){
-            var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
-            list.append(li);
-            li.find("label").click(checkOne);
-            li.find("input").click(checkOne);
-        }
+        ).error(function() {$('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_voting'); });        
     };
     //funcion para borrar usuario
     var erase = function(ev){
+        $('.loading').show();
         ev.preventDefault();
         var a = $(this);
         var tr = a.parent().parent();
@@ -91,8 +93,9 @@ $(function() {
                 }else{
                     showMsg('dashboard.error', 'dashboard.error_erasing_user');
                 }
+                $('.loading').hide();
             }
-        ).error(function() { showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
+        ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
     };
     //cargando amigos del usuario en session
     function loadUsers(next){
@@ -109,6 +112,7 @@ $(function() {
     }
     //cargando nominaciones del usuario en session, depende del tipo
     function loadNominations(type){
+        $('.loading').show();
         $.getJSON('/nominations/'+type, function(data) {
             var list = $('#'+type);
             if (data.length < 1 ){
@@ -120,7 +124,8 @@ $(function() {
             }
             list.find("label").click(checkOne);
             list.find("input").click(checkOne);
-        }).error(function() { showMsg('dashboard.error', 'dashboard.warning_nominations'); });
+            $('.loading').hide();
+        }).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.warning_nominations'); });
     }
     //para q solo se puede seleccionar una nominacion a la vez
     function checkOne(){
@@ -139,7 +144,7 @@ $(function() {
     }
     //cargar la nominacion y llenar details
     function showNomination(id, type, refresh){
-        //TODO: show avatar
+        $('.loading').show();
         $.getJSON('/nominations/'+id, function(data) {
             if (!data){
                 //alert('Du! nominacion ya no existe o termino :(');
@@ -191,8 +196,9 @@ $(function() {
             }
             if (!refresh){
                 details.show('slide');
-            }            
-        }).error(function() { showMsg('dashboard.error', 'dashboard.error_showing'); });
+            }
+            $('.loading').hide();
+        }).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_showing'); });
     }
     //actualizar la nominacion en contexto
     $('.refresh').click(function(ev){
@@ -246,6 +252,7 @@ $(function() {
 		buttons: {
             //TODO: put a t string :S
 			"Create a nomination": function() {
+                $('.loading').show();
                 var dialog = $(this);
                 var name = dialog.find('#name').val();
                 var datep = dialog.find('#datep').val();
@@ -258,8 +265,9 @@ $(function() {
                         li.find("input").click(checkOne);
                         li.find("label").trigger('click');
                         dialog.dialog( "close" );
+                        $('.loading').hide();
                     }
-                ).error(function() { showMsg('dashboard.error', 'dashboard.warning_creating'); });
+                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.warning_creating'); });
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -279,6 +287,7 @@ $(function() {
 		modal: true,
 		buttons: {
 			"Add friend(s)": function() {
+                $('.loading').show();
                 var dialog = $(this);
                 var tbody = $('.details').find('.userst').find('tbody');
                 var users = [];
@@ -317,14 +326,15 @@ $(function() {
                                 menu.append(aerase);
                                 menu.appendTo(tr);
                                 tbody.append(tr);                                
-                            });
+                            });                            
                             dialog.dialog( "close" );
                         }else{
                             dialog.dialog( "close" );
                             showMsg('dashboard.error', 'dashboard.error_adduser');
                         }
+                        $('.loading').hide();
                     }
-                ).error(function() { showMsg('dashboard.error', 'dashboard.error_adduser'); });				
+                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_adduser'); });				
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -336,6 +346,7 @@ $(function() {
 	});
     //para cancelar nominacion
     $('#cancel').click(function(ev){
+        $('.loading').show();
         ev.preventDefault();
         var nid = $('.details').attr('nid');
         $.ajax({
@@ -350,15 +361,18 @@ $(function() {
                     $('#'+nid).remove();
                 }
                 $('.details').hide();
+                $('.loading').hide();
             },
             error: function(){
                 showMsg('dashboard.error', 'dashboard.error_erasing');
+                $('.loading').hide();
             },
             dataType: 'json'
         });
     });
     //para terminar nominacion
     $('#end').click(function(ev){
+        $('.loading').show();
         ev.preventDefault();
         var nid = $('.details').attr('nid');
         $.ajax({
@@ -373,15 +387,18 @@ $(function() {
                     $('#'+nid).remove();
                 }
                 $('.details').hide();
+                $('.loading').hide();
             },
             error: function(){
                 showMsg('dashboard.error', 'dashboard.error_ending');
+                $('.loading').hide();
             },
             dataType: 'json'
         });
     });
     //para remover al usuario actual de la nominacion
     $('#remove').click(function(ev){
+        $('.loading').show();
         ev.preventDefault();
         var uid = $(this).attr('uid');
         var nid = $('.details').attr('nid');        
@@ -393,10 +410,30 @@ $(function() {
                 }else{
                     showMsg('dashboard.error', 'dashboard.error_removing');
                 }
+                $('.loading').hide();
             }
-        ).error(function() { showMsg('dashboard.error', 'dashboard.error_removing'); }); 
+        ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_removing'); }); 
     });
     //escuchar por los clicks en votar y borrar
     $('.vote').click(vote);
     $('.erase').click(erase);
+    $('#sf').submit(function(){
+        var searchTerm = $('#sf').find('.searchbox').val();
+        if (searchTerm){
+            $('.loading').show();
+            $.post("/nominations/search", { term: searchTerm },
+                function(data) {
+                    if (data){                    
+                        //TODO: show the list
+                        console.log(data);
+                       
+                    }else{
+                        showMsg('dashboard.error', 'dashboard.error_searching');
+                    }
+                    $('.loading').hide();
+                }
+            ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_searching'); }); 
+        }
+        return false;
+    });
 });

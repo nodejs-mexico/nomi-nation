@@ -5,7 +5,10 @@
         .new
             a#nn(href="#")= t('dashboard.new_nomination')
         .loading 
-            img(src="/images/loading.png")
+            img(src="/images/ajax-loader.gif")
+        form#sf
+            .search
+                input(type="text", placeholder="Search")
         .exit 
             a(href="/logout")= t('dashboard.exit')
 #main-container

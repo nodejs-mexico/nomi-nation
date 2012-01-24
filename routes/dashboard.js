@@ -62,6 +62,17 @@ module.exports = function(app, log){
     });
     
     /**
+     * buscar nominaciones 
+     */
+    app.post('/nominations/search', checkUser, function(req, res){
+        var term = req.param('term');
+        nominator.findMyNominations(term,function(err, data){
+            if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
+            res.json(data);
+        });
+    });
+    
+    /**
      * lista de mis nominaciones
      */
     app.get('/nominations/mine', checkUser, function(req, res){

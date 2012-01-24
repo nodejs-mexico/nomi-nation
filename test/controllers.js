@@ -9,6 +9,16 @@ var vows = require('vows'),
     nominator = require('../controllers/nominator.js');
 
 exports.findN = vows.describe('find nominations').addBatch({
+    'when finding nominations by name' : {
+        topic : function(){
+            nominator.findNominationByName('mas', this.callback);
+        },
+        'result is > 0' : function(err, docs){
+            if (err) { console.log(err); return;}
+            console.log(docs);
+            assert.lengthOf(docs, 1);
+        }
+    },
     'when finding where 2 voted' : {
         topic : function(){ 
             nominator.findVoted(2,this.callback);
@@ -93,7 +103,7 @@ exports.findN = vows.describe('find nominations').addBatch({
             if (err) { console.log(err); return; }
             assert.lengthOf(docs, 0);
         }
-    }
+    }  
 });
 
 

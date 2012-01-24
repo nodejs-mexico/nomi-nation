@@ -141,6 +141,18 @@ NOMINATOR.findNominated = function(userId, callback) {
 };
 
 /**
+ * find nominations by term
+ * @term nomination name or term
+ * @callback function
+ * 
+ */
+NOMINATOR.findNominationByName = function(term, callback){
+    //TODO: scape this
+    var myregex = RegExp(term);
+    Nomination.find({name: myregex}, callback);
+};
+
+/**
  * find one nomination
  * @nomId nomination id
  * @callback function
