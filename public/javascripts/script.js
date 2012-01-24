@@ -484,6 +484,6 @@ $(function() {
         return false;
     });
     $('.invite').click(function(){
-        $( "#dialog-add" ).dialog( "open" );
+        $( "#dialog-invite" ).dialog( "open" );
     });
 });
