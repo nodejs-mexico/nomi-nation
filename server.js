@@ -41,7 +41,6 @@ app.configure('production', function() {
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
-    app.use(express.logger('dev'))
     app.use(express.bodyParser());
     app.use(i18next.handle);
     app.use(express.methodOverride());
