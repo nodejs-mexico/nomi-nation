@@ -7,10 +7,9 @@
         .loading 
             img(src="/images/ajax-loader.gif")
         form#sf
-            .search
-                input(type="text", placeholder="Search")
-        .invite
-            a(href="#") Invite
+            input.search(type="text", placeholder="Search")
+        div
+            a.invite(href="#") Invite
         .exit 
             a(href="/logout")= t('dashboard.exit')
 #main-container
@@ -93,6 +92,14 @@
     form
         fieldset
             ol#selectable
+
+#dialog-invite(title="#{t('dashboard.invite_friends')}")
+    form#filterform(action="#")
+        input#filterinput(type="text")
+    br
+    form
+        fieldset
+            ol#selectablei
 
 #dialog-modal(title="#{t('dashboard.error')}")
     p#msg 

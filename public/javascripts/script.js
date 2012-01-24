@@ -98,11 +98,13 @@ $(function() {
         ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
     };
     //cargando amigos del usuario en session
+    var listi = $('#selectablei');
     function loadUsers(next){
         $.getJSON(next || '/friends', function(data) {
             if (data.data.length > 0){
                 $.each(data.data, function(key, value){
                     list.append('<li class="ui-state-default" id="'+value.id+'"><img width="30px" src="https://graph.facebook.com/'+value.id+'/picture"/><a>'+value.name+'</a></li>');
+                    listi.append('<li class="ui-state-default" id="'+value.id+'"><img width="30px" src="https://graph.facebook.com/'+value.id+'/picture"/><a>'+value.name+'</a></li>');
                 });
                 loadUsers(data.paging.next);
             }else{
@@ -344,6 +346,51 @@ $(function() {
 			//TODO:
 		}
 	});
+    //creamos el dialog de agregar usuarios
+    $( "#dialog-invite" ).dialog({
+        autoOpen: false,
+        height: 300,
+		width: 450,
+		modal: true,
+		buttons: {
+			"Invite friend(s)": function() {
+                $('.loading').show();
+                var dialog = $(this);
+                var users = [];
+                var userp;
+                $('#selectable').find('.ui-selected').each(function(key, value){
+                    users.push({
+                        "_id" : $(value).attr('id'),
+                        "name" : $(value).text()
+                    });                   
+                });
+                var ul = users.length;
+                if (ul > 0 && ul <= 1){
+                    userp = users[0];
+                }else{
+                    userp = users;
+                }
+                $.post("/invite", { users: userp },
+                    function(data) {
+                        if (data){
+                            showMsg('dashboard.warning', 'dashboard.invited'); 
+                            dialog.dialog( "close" );
+                        }else{
+                            dialog.dialog( "close" );
+                            showMsg('dashboard.error', 'dashboard.error_adduser');
+                        }
+                        $('.loading').hide();
+                    }
+                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_adduser'); });				
+			},
+			Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+		close: function() {
+			//TODO:
+		}
+	});
     //para cancelar nominacion
     $('#cancel').click(function(ev){
         $('.loading').show();
@@ -435,5 +482,8 @@ $(function() {
             ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_searching'); }); 
         }
         return false;
+    });
+    $('.invite').click(function(){
+        $( "#dialog-add" ).dialog( "open" );
     });
 });

@@ -1,4 +1,5 @@
 //Copyright (C) 2011  Ivan Torres -MrPix
+//TODO: change post msgs to i18 string
 /**
  * Rutas dashboard 
 */
@@ -196,6 +197,48 @@ module.exports = function(app, log){
         });        
     });
     
+    /**
+     * Invitar amigos
+     */
+    app.post('/invite', checkUser, function(req, res){
+        var usersl = req.param('users');
+        var userl = 0;
+        if (usersl instanceof Array){
+            userl = usersl.length;
+            for (var i=0;i<userl;i++){
+                fb.apiCall(
+                    'POST',
+                    '/'+usersl[i]._id+'/feed',
+                    {
+                        access_token: req.session.user.access_token,
+                        message: 'Te invito a nominar a tus amigos en nomi-nation y diviertete',
+                        name: "Nominar",
+                        link: url
+                    },
+                    function (error, response, body) {
+                        if (error) { log.debug('error posting on voted user'); return; }
+                        log.notice('posted on the added user wall: ' + usersl[i]._id);
+                    }
+                );
+            }
+        }else{
+            fb.apiCall(
+                'POST',
+                '/'+usersl._id+'/feed',
+                {
+                        access_token: req.session.user.access_token,
+                        message: 'Te invito a nominar a tus amigos en nomi-nation y diviertete',
+                        name: "Nominar",
+                        link: url
+                },
+                function (error, response, body) {
+                    if (error) { log.debug('error posting on voted user'); return; }
+                    log.notice('posted on the added user wall: ' + usersl._id);
+                }
+            );
+        }
+    });
+     
     /**
      * Agregar usuario a nominacion
      */
