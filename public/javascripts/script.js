@@ -374,7 +374,7 @@ $(function() {
                 var dialog = $(this);
                 var users = [];
                 var userp;
-                $('#selectable').find('.ui-selected').each(function(key, value){
+                $('#selectablei').find('.ui-selected').each(function(key, value){
                     users.push({
                         "_id" : $(value).attr('id'),
                         "name" : $(value).text()
