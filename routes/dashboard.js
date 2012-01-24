@@ -323,13 +323,11 @@ module.exports = function(app, log){
         var id = req.param('id');
         nominator.findNomination(id,function(err, doc){
             if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
-            console.log(doc);
             var users = doc.users;
             var usersl = doc.users.length;
             var voters = doc.voters;
             var votersl = doc.voters.length;
-            console.log(users.length)
-            if (users.length > 0){
+            if (usersl > 0){
                 var winner = users[0];
                 for (var j=1; j<usersl;j++){
                     if (winner.votes < users[j].votes){
@@ -393,11 +391,7 @@ module.exports = function(app, log){
                 if (err) { log.debug('error erasing nomination'); return; }
                 log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
             });
-            nominator.eraseNomination(id, function(err){
-                if (err) { log.debug('error erasing nomination'); return; }
-                log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
-            });
-            try { res.json('_winner_');} catch(e){}
+            res.json(true);
         });
     });
     

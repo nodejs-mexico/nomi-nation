@@ -444,6 +444,7 @@ $(function() {
             data: {id : nid},
             success: function(data){
                 if (!data){ showMsg('dashboard.error', 'dashboard.error_ending'); return;}
+                if (data === true){ showMsg('dashboard.warning','dashboard.win', 'no users :('); };
                 showMsg('dashboard.warning','dashboard.win', data.name);
                 $('#'+nid).remove();
                 while($('#'+nid).length > 0){
