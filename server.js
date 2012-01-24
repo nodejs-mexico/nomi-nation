@@ -7,6 +7,7 @@ var express = require('express'),
     log = new Log(),
     fs = require('fs'),
     i18next = require('i18next'),
+    port = process.env.PORT || 3000,
     MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
     session_store = new MemoryStore();
 
