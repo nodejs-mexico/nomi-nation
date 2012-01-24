@@ -7,8 +7,14 @@ var express = require('express'),
     log = new Log(),
     fs = require('fs'),
     i18next = require('i18next'),
-    MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
-    session_store = new MemoryStore();
+    Db = require('mongodb').Db,
+    mongoStore = require('connect-mongodb'),
+    session_store,
+    port = process.env.PORT || 3000;
+    
+Db.connect("mongodb://nominator:nominat0r@ds029257.mongolab.com:29257/nomination-sessions", function(err, db) {
+    session_store = new mongoStore({db: db});
+});
 
 var app = module.exports = express.createServer();
 
@@ -24,6 +30,7 @@ app.configure('development', function() {
     log.stream = fs.createWriteStream('logs/dev.log', {
         flags: 'w'
     });
+    port = 80; //cambiar a puerto deseado
     app.use(express.errorHandler({
         dumpExceptions: true,
         showStack: true
@@ -60,7 +67,7 @@ require('./routes/index')(app, log);
 require('./routes/dashboard')(app, log);
 
 if (!module.parent) {
-    app.listen(process.env.PORT || 3000);
+    app.listen(port);
     console.log("Express server listening on port %d in %s mode", 
         app.address().port, app.settings.env);
 }
