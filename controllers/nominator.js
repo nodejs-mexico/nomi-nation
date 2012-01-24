@@ -80,14 +80,12 @@ function prettyDate(a) {
 }
 NOMINATOR.vote = function(nomination, voterId, userId, callback) {
     //TODO: check we dont want more than 10 users per nomination
-    console.log(nomination);
     var isPresent = -1;
     var oldEnough = true;
     try {
         isPresent = presence(nomination.voters, voterId);
         if (isPresent !== -1) {
               oldDate = prettyDate(getDate(nomination.voters, voterId).toISOString()),
-              console.log(oldDate)
           if (oldDate.search('menos de un dia') !== -1){
             oldEnough = false;
           }
