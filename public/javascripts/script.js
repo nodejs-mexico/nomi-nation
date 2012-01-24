@@ -235,8 +235,9 @@ $(function() {
     });
     //inicializar el seleccionador de fecha
     $( "#datep" ).datepicker();
-    //hacer seleccionable la lista de nominaciones
+    //hacer seleccionable la lista de usuarios
     $( "#selectable" ).selectable();
+    $( "#selectablei" ).selectable();
     //abrir el dialog de nueva nominacion
     $("#nn").click(function(){
         $( "#dialog-new" ).dialog( "open" );
