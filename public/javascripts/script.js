@@ -362,6 +362,24 @@ $(function() {
 			//TODO:
 		}
 	});
+    $( '#dialog-sr' ).dialog({
+        autoOpen: false,
+        height: 300,
+        width: 450,
+		modal: true,
+		buttons: {
+			"Show details": function() {
+                var id = $('#sr').find("input[name='sr']:checked").val(); 
+                showNomination(id, 'voted');
+			},
+            Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+		close: function() {
+			//TODO:
+		}
+    });
     //creamos el dialog de agregar usuarios
     $( "#dialog-invite" ).dialog({
         autoOpen: false,
@@ -488,10 +506,20 @@ $(function() {
             console.log(searchTerm);
             $.post("/nominations/search", { term: searchTerm },
                 function(data) {
-                    if (data){                    
-                        //TODO: show the list
-                        console.log(data);
-                       
+                    if (data){
+                        var datal = data.length;
+                        if (datal <1 ){ 
+                            showMsg('dashboard.warning', 'dashboard.notfound'); 
+                            $('.loading').hide(); 
+                            return; 
+                        }
+                        var dialog = $( '#dialog-sr' );
+                        var fs = dialog.find('#sr');
+                        fs.html();
+                        for (var i=0;i<datal;i++){
+                            fs.append('<input type="radio" group="sr" value="'+data[i].id+'"> '+data[i].name);
+                        }
+                        dialog.dialog('open');
                     }else{
                         showMsg('dashboard.error', 'dashboard.error_searching');
                     }

@@ -215,7 +215,7 @@ NOMINATOR.findNominated = function(userId, callback) {
 NOMINATOR.findNominationByName = function(term, callback){
     //TODO: scape this
     var myregex = RegExp(term);
-    Nomination.find({name: myregex}, callback);
+    Nomination.find({name: myregex},['name', 'id'], callback);
 };
 
 /**
