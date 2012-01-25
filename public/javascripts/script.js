@@ -515,9 +515,9 @@ $(function() {
                         }
                         var dialog = $( '#dialog-sr' );
                         var fs = dialog.find('#sr');
-                        fs.html();
+                        fs.html('');
                         for (var i=0;i<datal;i++){
-                            fs.append('<input type="radio" group="sr" value="'+data[i]._id+'"> '+data[i].name);
+                            fs.append('<input type="radio" name="sr" value="'+data[i]._id+'"> '+data[i].name+'<br>');
                         }
                         dialog.dialog('open');
                     }else{
