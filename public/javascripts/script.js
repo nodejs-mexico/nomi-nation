@@ -58,7 +58,7 @@ $(function() {
                     votes.html(data);
                     var list = $('#voted');
                     var found = list.find('li:containsExactly('+name+')');
-                    if (found.length < 1){
+                    if (found.length > 0){
                         var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
                         list.append(li);
                         li.find("label").click(checkOne);
