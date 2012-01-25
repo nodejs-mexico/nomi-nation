@@ -517,7 +517,7 @@ $(function() {
                         var fs = dialog.find('#sr');
                         fs.html();
                         for (var i=0;i<datal;i++){
-                            fs.append('<input type="radio" group="sr" value="'+data[i].id+'"> '+data[i].name);
+                            fs.append('<input type="radio" group="sr" value="'+data[i]._id+'"> '+data[i].name);
                         }
                         dialog.dialog('open');
                     }else{
