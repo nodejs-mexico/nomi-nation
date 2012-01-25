@@ -485,6 +485,7 @@ $(function() {
         var searchTerm = $('#sf').find('.search').val();
         if (searchTerm){
             $('.loading').show();
+            console.log(searchTerm);
             $.post("/nominations/search", { term: searchTerm },
                 function(data) {
                     if (data){                    
