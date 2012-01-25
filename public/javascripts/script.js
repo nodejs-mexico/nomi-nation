@@ -371,6 +371,7 @@ $(function() {
 			"Show details": function() {
                 var id = $('#sr').find("input[name='sr']:checked").val(); 
                 showNomination(id, 'voted');
+                $( this ).dialog( "close" );
 			},
             Cancel: function() {
 				$( this ).dialog( "close" );
