@@ -15,9 +15,10 @@ jQuery.expr[':'].Contains = function(a,i,m){
     return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
 };
 // expresion para buscar texto que sea igual a otro
-jQuery.extend(jQuery.expr[':'], { 
-     containsExactly: "$(a).text() == m[3]" 
-}); 
+jQuery.expr[':'].containsExactly = function(a,i,m) {
+    //"$(a).text() == m[3]" 
+    return ($(a).text() == m[3]);
+}; 
 //mostrar mensajes modales
 function showMsg(title, msg, extra){
     var dialog = $( "#dialog-modal" );
@@ -58,7 +59,7 @@ $(function() {
                     votes.html(data);
                     var list = $('#voted');
                     var found = list.find('li:containsExactly('+name+')');
-                    if (found.length > 0){
+                    if (found.length < 0){
                         var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
                         list.append(li);
                         li.find("label").click(checkOne);
