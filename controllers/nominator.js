@@ -187,7 +187,7 @@ NOMINATOR.findMyNominations = function(userId, callback) {
  * 
 */
 NOMINATOR.findVoted = function(userId, callback) {
-    Nomination.where('voters').in([userId])
+    Nomination.where('voters.'+userId).exists(true)
         .where('active', true)
         .select('name', '_id', 'endDate')
         .run(callback);

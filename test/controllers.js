@@ -9,19 +9,18 @@ var vows = require('vows'),
     nominator = require('../controllers/nominator.js');
 
 exports.findN = vows.describe('find nominations').addBatch({
-    'when finding nominations by name' : {
+    /*'when finding nominations by name' : {
         topic : function(){
             nominator.findNominationByName('mas', this.callback);
         },
         'result is > 0' : function(err, docs){
             if (err) { console.log(err); return;}
-            console.log(docs);
-            assert.lengthOf(docs, 1);
+            assert.lengthOf(docs, 0);
         }
-    },
+    },*/
     'when finding where 2 voted' : {
         topic : function(){ 
-            nominator.findVoted(2,this.callback);
+            nominator.findVoted(1239274592,this.callback);
         },
         'result its only one nomination' : function(err, docs){
             if (err) { console.log(err); return; }
@@ -31,8 +30,8 @@ exports.findN = vows.describe('find nominations').addBatch({
             if (err) { console.log(err); return; }
             assert.equal('test2', docs[0].name);
         }
-    },
-    'when finding where 1 voted' : {
+    }
+    /*'when finding where 1 voted' : {
         topic : function(){ 
             nominator.findVoted(1,this.callback);
         },
@@ -103,7 +102,7 @@ exports.findN = vows.describe('find nominations').addBatch({
             if (err) { console.log(err); return; }
             assert.lengthOf(docs, 0);
         }
-    }  
+    } */ 
 });
 
 
