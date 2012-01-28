@@ -41,7 +41,18 @@
         "warning_erasing" : "Nominacion borrada",
         "create_new" : "Crear nominacion",
         "all_required" : "Todos los campos son requeridos",
-        "win" : "_winner_ Gano la nominacion"
+        "win" : "_winner_ Gano la nominacion",
+        "add_friends" : "Agregar Amigos",
+        "invite_friends" : "Invitar amigos",
+        "search_results" : "Resultados",
+        "voted" : "Vote por \" _uname_ \" en \" _nname_ \" en nomi-nation, vota tu tambien!",
+        "voted_u" "Vote por ti en \" _nname_ \" en nomi-nation vota tu tambien",
+        "invited" : "Te invito a nominar a tus amigos en nomi-nation y diviertete",
+        "nominate" : "Nomina",
+        "add" : "Agregar",
+        "create" : "Crear",
+        "added" : "Te agregue a \" _nname_ \" en nomi-nation agrega a tus amigos tambien",
+        "won" : " _wname_ gano _nname_ en nomi-nation crea tu propia nominacion"
     },
     "index":{
         "features": "Características",

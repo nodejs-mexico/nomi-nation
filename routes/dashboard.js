@@ -166,12 +166,11 @@ module.exports = function(app, log){
                     '/'+voterid+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Vote por "' + nom.users[index].name + '" en "' + 
-                            nom.name + '" en nomi-nation, vota tu tambien',
-                        name: "Votar",
+                        message: req.i18n.t('dashboard.voted', {uname: nom.users[index].name , nname: nom.name }),
+                        name: req.i18n.t('dashboard.vote'),
                         link: url + '?invited=' + req.param('id')
                     },
-                    function (error, response, body) {
+                    function (error) {
                         if (error) { log.debug('error posting on my wall'); return; }
                         log.notice('posted on current user wall: ' + voterid);
                     }
@@ -182,12 +181,11 @@ module.exports = function(app, log){
                     '/'+nom.users[index]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Vote por ti en "' + nom.name + '" en nomi-nation ' +
-                            'vota tu tambien',
-                        name: "Votar",
+                        message: req.i18n.t('dashboard.voted_u', { nname: nom.name }),
+                        name: req.i18n.t('dashboard.vote'),
                         link: url + '?invited=' + req.param('id')
                     },
-                    function (error, response, body) {
+                    function (error) {
                         if (error) { log.debug('error posting on voted user'); return; }
                         log.notice('posted on the voted user wall: ' + nom.users[index]._id);
                     }
@@ -203,38 +201,39 @@ module.exports = function(app, log){
     app.post('/invite', checkUser, function(req, res){
         var usersl = req.param('users');
         var userl = 0;
+        var onerror;
         if (usersl instanceof Array){
             userl = usersl.length;
+            onerror = function (error) {
+                        if (error) { log.debug('error posting on voted user'); return; }
+                    };
             for (var i=0;i<userl;i++){
                 fb.apiCall(
                     'POST',
                     '/'+usersl[i]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: 'Te invito a nominar a tus amigos en nomi-nation y diviertete',
-                        name: "Nominar",
+                        message: req.i18n.t('dashboard.invited'),
+                        name: req.i18n.t('dashboard.nominate'),
                         link: url
                     },
-                    function (error, response, body) {
-                        if (error) { log.debug('error posting on voted user'); return; }
-                        log.notice('posted on the added user wall: ' + usersl[i]._id);
-                    }
+                    onerror
                 );
             }
         }else{
+            onerror = function (error) {
+                    if (error) { log.debug('error posting on voted user'); return; }
+                };
             fb.apiCall(
                 'POST',
                 '/'+usersl._id+'/feed',
                 {
                         access_token: req.session.user.access_token,
-                        message: 'Te invito a nominar a tus amigos en nomi-nation y diviertete',
-                        name: "Nominar",
+                        message: req.i18n.t('dashboard.invited'),
+                        name: req.i18n.t('dashboard.nominate'),
                         link: url
                 },
-                function (error, response, body) {
-                    if (error) { log.debug('error posting on voted user'); return; }
-                    log.notice('posted on the added user wall: ' + usersl._id);
-                }
+                onerror
             );
         }
         res.json(true);
@@ -254,6 +253,9 @@ module.exports = function(app, log){
                 res.json(true);
                 var usersl = req.param('users');
                 var userl = 0;
+                var onerror = function (error) {
+                                if (error) { log.debug('error posting on voted user'); return; }
+                            };
                 if (usersl instanceof Array){
                     userl = usersl.length;
                     for (var i=0;i<userl;i++){
@@ -262,15 +264,11 @@ module.exports = function(app, log){
                             '/'+usersl[i]._id+'/feed',
                             {
                                 access_token: req.session.user.access_token,
-                                message: 'Te agregue a "' + doc.name + '" en nomi-nation ' +
-                                    'agrega a tus amigos tambien',
-                                name: "Votar",
+                                message: req.i18n.t('dashboard.added', { nname: doc.name }),
+                                name: req.i18n.t('dashboard.add'),
                                 link: url + '?invited=' + req.param('id')
                             },
-                            function (error, response, body) {
-                                if (error) { log.debug('error posting on voted user'); return; }
-                                log.notice('posted on the added user wall: ' + usersl[i]._id);
-                            }
+                            onerror
                         );
                     }
                 }else{
@@ -279,15 +277,11 @@ module.exports = function(app, log){
                         '/'+usersl._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: 'Te agregue a "' + doc.name + '" en nomi-nation ' +
-                                'agrega a tus amigos tambien',
-                            name: "Votar",
+                            message: req.i18n.t('dashboard.added', { nname: doc.name }),
+                            name: req.i18n.t('dashboard.add'),
                             link: url + '?invited=' + req.param('id')
                         },
-                        function (error, response, body) {
-                            if (error) { log.debug('error posting on voted user'); return; }
-                            log.notice('posted on the added user wall: ' + usersl._id);
-                        }
+                        onerror
                     );
                 }
             });
@@ -335,20 +329,19 @@ module.exports = function(app, log){
                     }
                 }
                 res.json(winner);
+                var onerror = function (error) {
+                                if (error) { log.debug('error posting on voted user'); return; }
+                            };
                 fb.apiCall(
                     'POST',
                     '/'+req.session.user.id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
-                            'crea tu propia nominacion',
-                        name: "Crear",
+                        message: req.i18n.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                        name: req.i18n.t('dashboard.create'),
                         link: url + '?invited=' + req.param('id')
                     },
-                    function (error, response, body) {
-                        if (error) { log.debug('error posting on voted user'); return; }
-                        log.notice('posted on the created user wall: ' + req.session.user.id);
-                    }
+                    onerror
                 );
                 for (var i=0;i<usersl;i++){
                     if (users[i]._id == req.session.user.id){ continue; }
@@ -357,33 +350,25 @@ module.exports = function(app, log){
                         '/'+users[i]._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
-                                'crea tu propia nominacion',
-                            name: "Crear",
+                            message: req.i18n.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                            name: req.i18n.t('dashboard.create'),
                             link: url
                         },
-                        function (error, response, body) {
-                            if (error) { log.debug('error posting on voted user'); return; }
-                            log.notice('posted on the user wall: ' + (users[i]._id || 1));
-                        }
+                        onerror
                     );
                 }
-                for (var i=0;i<votersl;i++){
+                for (i=0;i<votersl;i++){
                     if (voters[i]._id == req.session.user.id){ continue; }
                     fb.apiCall(
                         'POST',
                         '/'+voters[i]._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: winner.name + ' gano "' + doc.name + '" en nomi-nation ' +
-                                'crea tu propia nominacion',
-                            name: "Crear",
+                            message: req.i18n.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                            name: req.i18n.t('dashboard.create'),
                             link: url
                         },
-                        function (error, response, body) {
-                            if (error) { log.debug('error posting on voted user'); return; }
-                            log.notice('posted on the user wall: ' + (voters[i]._id || 0));
-                        }
+                        onerror
                     );
                 }
             }else{
