@@ -41,7 +41,18 @@
         "warning_erasing" : "Nomination erased",
         "create_new" : "Create new nomination",
         "all_required" : "All fields required",
-        "win" : "_winner_ Won the nomination"
+        "win" : "_winner_ Won the nomination",
+        "add_friends" : "Add Friends",
+        "invite_friends" : "Invite Friends",
+        "search_results" : "Search results",
+        "invited" : "I invite you to nominate your friends in nominations and have some fun!!",
+        "voted" : "I voted for \" _uname_ \" in \" _nname_ \" in nomi-nation, you can vote too!",
+        "voted_u" "I voted for you in \" _nname_ \" in nomi-nation, you can vote too!",
+        "nominate" : "Nominate",
+        "add" : "Add",
+        "create" : "Create one",
+        "added" : "I added you to \" _nname_ \" in nomi-nation, add your friends too!",
+        "won" : " _wname_ won _nname_ in nomi-nation, create your own nomination"
     },
     "index":{
         "features": "Features",
