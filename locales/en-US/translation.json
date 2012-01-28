@@ -1,8 +1,8 @@
 {
     "nli": "User not logged in",
     "app": {
-        "name": "Nomi-nation",
-         "welcome" : "Welcome to $t(app.name)"
+        "name": "Nomi-nation - Beta",
+         "welcome" : "Welcome to $t(app.name) - Beta"
     },
     "creator": {
         "name": "&copy; ipseitycloud"
