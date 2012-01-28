@@ -1,8 +1,8 @@
 {
     "nli": "Usuario no ah iniciado session",
     "app": {
-        "name": "Nomi-nation",
-        "welcome" : "Bienvenido a $t(app.name)"
+        "name": "Nomi-nation - Beta",
+        "welcome" : "Bienvenido a $t(app.name) - Beta"
     },
     "creator": {
         "name": "&copy; ipseitycloud"
