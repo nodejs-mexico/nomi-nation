@@ -7,14 +7,9 @@ var express = require('express'),
     log = new Log(),
     fs = require('fs'),
     i18next = require('i18next'),
-    Db = require('mongodb').Db,
-    mongoStore = require('connect-mongodb'),
-    session_store,
+    MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
+    session_store = new MemoryStore(),
     port = process.env.PORT || 3000;
-
-Db.connect("mongodb://nominator:nominat0r@ds029257.mongolab.com:29257/nomination-sessions", function(err, db) {
-    session_store = new mongoStore({db: db});
-});
 
 var app = module.exports = express.createServer();
 
