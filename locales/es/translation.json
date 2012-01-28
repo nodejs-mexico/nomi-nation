@@ -46,7 +46,7 @@
         "invite_friends" : "Invitar amigos",
         "search_results" : "Resultados",
         "voted" : "Vote por \" _uname_ \" en \" _nname_ \" en nomi-nation, vota tu tambien!",
-        "voted_u" "Vote por ti en \" _nname_ \" en nomi-nation vota tu tambien",
+        "voted_u" : "Vote por ti en \" _nname_ \" en nomi-nation vota tu tambien",
         "invited" : "Te invito a nominar a tus amigos en nomi-nation y diviertete",
         "nominate" : "Nomina",
         "add" : "Agregar",
