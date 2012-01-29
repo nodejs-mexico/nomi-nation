@@ -11,14 +11,30 @@ module.exports = function(app, log){
     */
     app.get('/', function(req, res){
         log.notice('landed on:' + new Date());
-        res.render('index', { error : req.param('error'), type: 'index', invited: req.param('invited')});
+        var ua = req.header('user-agent');
+        if(/mobile/i.test(ua)) {
+            res.json(true);
+        }else{
+            res.render('index', 
+                { 
+                    error : req.param('error'), 
+                    type: 'index', 
+                    invited: req.param('invited')
+                }
+            );
+        }
     });
     
     /**
      * Logout page
      */
     app.get('/logout', function(req, res){
-        req.session.destroy(function(){ res.redirect('/'); });
+        var ua = req.header('user-agent');
+        if(/mobile/i.test(ua)) {
+            res.json(true);
+        }else{
+            req.session.destroy(function(){ res.redirect('/'); });
+        }
     });
         
     /**
@@ -30,11 +46,17 @@ module.exports = function(app, log){
             redirect = 'http://nomination.cloudno.de/auth/fb?invited='+req.param('invited');
         }
         log.notice('trying to login:' + new Date());
-        res.redirect(fb.getAuthorizeUrl({
+        var reduri = fb.getAuthorizeUrl({
             client_id: '264644053569277', //put the client id
             redirect_uri: redirect, //cambiar si es necesario
             scope: 'offline_access,publish_stream,read_stream'
-        }));
+        });
+        var ua = req.header('user-agent');
+        if(/mobile/i.test(ua)) {
+            res.json(reduri);
+        }else{
+            res.redirect(reduri);
+        }
     });    
     /**
      * FB return
@@ -70,6 +92,11 @@ module.exports = function(app, log){
                     var dashboard = '/dashboard';
                     if (invited){
                         dashboard = '/dashboard?invited='+invited;
+                    }
+                    var ua = req.header('user-agent');
+                    if(/mobile/i.test(ua)) {
+                        res.json(invited);
+                        return;
                     }
                     res.redirect(dashboard);
                 });
