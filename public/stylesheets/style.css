@@ -218,9 +218,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 #main-container{
     height: 500px;
 }
-#main{
-    height: 100%;
-}
 .userst th, .userst td{
     border: 1px solid #ededed;
 }
@@ -305,7 +302,10 @@ label{
 .ficon{
 	float: right;
 }
-   
+.ficon img{
+    margin-top: -100px;
+    width: 480px;
+}
 .title{
 	text-align: center;
 }
