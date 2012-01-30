@@ -12,9 +12,9 @@ module.exports = function(app, log){
     app.get('/', function(req, res){
         log.notice('landed on:' + new Date());
         var ua = req.header('user-agent');
-        if(/mobile/i.test(ua)) {
+        /*if(/mobile/i.test(ua)) {
             res.json(true);
-        }else{
+        }else{*/
             res.render('index', 
                 { 
                     error : req.param('error'), 
@@ -22,7 +22,7 @@ module.exports = function(app, log){
                     invited: req.param('invited')
                 }
             );
-        }
+        //}
     });
     
     /**
@@ -30,11 +30,11 @@ module.exports = function(app, log){
      */
     app.get('/logout', function(req, res){
         var ua = req.header('user-agent');
-        if(/mobile/i.test(ua)) {
+        /*if(/mobile/i.test(ua)) {
             res.json(true);
-        }else{
+        }else{*/
             req.session.destroy(function(){ res.redirect('/'); });
-        }
+        //}
     });
         
     /**
@@ -52,11 +52,11 @@ module.exports = function(app, log){
             scope: 'offline_access,publish_stream,read_stream'
         });
         var ua = req.header('user-agent');
-        if(/mobile/i.test(ua)) {
+        /*if(/mobile/i.test(ua)) {
             res.json(reduri);
-        }else{
+        }else{*/
             res.redirect(reduri);
-        }
+        //}
     });    
     /**
      * FB return
@@ -94,10 +94,10 @@ module.exports = function(app, log){
                         dashboard = '/dashboard?invited='+invited;
                     }
                     var ua = req.header('user-agent');
-                    if(/mobile/i.test(ua)) {
+                    /*if(/mobile/i.test(ua)) {
                         res.json(invited);
                         return;
-                    }
+                    }*/
                     res.redirect(dashboard);
                 });
             }
