@@ -2,9 +2,9 @@
 /**
  * Rutas principales
 */
-var fb = require('facebook-js'), 
+var fb = require('facebook-js');/*, 
     bowser = require('node-bowser'),
-    bt;
+    bt;*/
 
 module.exports = function(app, log){
     
@@ -117,4 +117,5 @@ module.exports = function(app, log){
                 });
             }
         );
-    })
+    });
+};
