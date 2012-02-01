@@ -2,7 +2,9 @@
 /**
  * Rutas principales
 */
-var fb = require('facebook-js');
+var fb = require('facebook-js'), 
+    bowser = require('node-bowser'),
+    bt;
 
 module.exports = function(app, log){
     
@@ -11,10 +13,23 @@ module.exports = function(app, log){
     */
     app.get('/', function(req, res){
         log.notice('landed on:' + new Date());
+        /*bt = new bowser(req);
+        if (bt.isMobile() || bt.isTablet()){
+            console.log('is mobile or tablet');
+        }else{
+            console.log('not mobile or tablet');
+        }*/
         var ua = req.header('user-agent');
-        /*if(/mobile/i.test(ua)) {
-            res.json(true);
-        }else{*/
+        if(/mobile/i.test(ua)) {
+            res.render('indexm', 
+                { 
+                    error : req.param('error'), 
+                    type: 'index', 
+                    invited: req.param('invited'),
+                    layout: 'layoutm'
+                }
+            );
+        }else{
             res.render('index', 
                 { 
                     error : req.param('error'), 
@@ -22,7 +37,7 @@ module.exports = function(app, log){
                     invited: req.param('invited')
                 }
             );
-        //}
+        }
     });
     
     /**
@@ -102,5 +117,4 @@ module.exports = function(app, log){
                 });
             }
         );
-    });
-};
+    })

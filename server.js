@@ -9,7 +9,7 @@ var express = require('express'),
     i18next = require('i18next'),
     MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
     session_store = new MemoryStore(),
-    port = process.env.PORT || 3000;
+    port = process.env.C9_PORT || 3000;
 
 var app = module.exports = express.createServer();
 
@@ -25,7 +25,7 @@ app.configure('development', function() {
     log.stream = fs.createWriteStream('logs/dev.log', {
         flags: 'w'
     });
-    port = 80; //cambiar a puerto deseado
+    //port = 80; //cambiar a puerto deseado
     app.use(express.errorHandler({
         dumpExceptions: true,
         showStack: true
