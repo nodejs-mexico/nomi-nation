@@ -1,4 +1,5 @@
 # Nomi-nation
+<img src="http://nomination.cloudno.de/images/ipn.png" width="180px" />
 
 Aplicacion basada en facebook para que puedas nominar a tus amigos en cualquier tipo de nominacion que se te ocurra, para ver como se hizo sigue este url:
 
