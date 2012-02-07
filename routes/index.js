@@ -6,8 +6,7 @@ var fb = require('facebook-js');/*,
     bowser = require('node-bowser'),
     bt;*/
 
-module.exports = function(app, log){
-    
+module.exports = function(app, log){    
     /**
      * GET home page.
     */

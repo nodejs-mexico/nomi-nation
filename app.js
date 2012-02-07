@@ -57,8 +57,7 @@ app.configure(function() {
 
 i18next.registerAppHelper(app)
     .serveClientScript(app)
-    .serveDynamicResources(app)
-    .serveMissingKeyRoute(app);
+    .serveDynamicResources(app);
     
 // Routes
 require('./routes/index')(app, log);

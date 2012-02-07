@@ -166,8 +166,8 @@ module.exports = function(app, log){
                     '/'+voterid+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: req.i18next.t('dashboard.voted', {uname: nom.users[index].name , nname: nom.name }),
-                        name: req.i18next.t('dashboard.vote'),
+                        message: app._locals.t('dashboard.voted', {uname: nom.users[index].name , nname: nom.name }),
+                        name: app._locals.t('dashboard.vote'),
                         link: url + '?invited=' + req.param('id')
                     },
                     function (error) {
@@ -181,8 +181,8 @@ module.exports = function(app, log){
                     '/'+nom.users[index]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: req.i18next.t('dashboard.voted_u', { nname: nom.name }),
-                        name: req.i18next.t('dashboard.vote'),
+                        message: app._locals.t('dashboard.voted_u', { nname: nom.name }),
+                        name: app._locals.t('dashboard.vote'),
                         link: url + '?invited=' + req.param('id')
                     },
                     function (error) {
@@ -213,8 +213,8 @@ module.exports = function(app, log){
                     '/'+usersl[i]._id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: req.i18next.t('dashboard.invited'),
-                        name: req.i18next.t('dashboard.nominate'),
+                        message: app._locals.t('dashboard.invited'),
+                        name: app._locals.t('dashboard.nominate'),
                         link: url
                     },
                     onerror
@@ -229,8 +229,8 @@ module.exports = function(app, log){
                 '/'+usersl._id+'/feed',
                 {
                         access_token: req.session.user.access_token,
-                        message: req.i18next.t('dashboard.invited'),
-                        name: req.i18next.t('dashboard.nominate'),
+                        message: app._locals.t('dashboard.invited'),
+                        name: app._locals.t('dashboard.nominate'),
                         link: url
                 },
                 onerror
@@ -264,8 +264,8 @@ module.exports = function(app, log){
                             '/'+usersl[i]._id+'/feed',
                             {
                                 access_token: req.session.user.access_token,
-                                message: req.i18next.t('dashboard.added', { nname: doc.name }),
-                                name: req.i18next.t('dashboard.add'),
+                                message: app._locals.t('dashboard.added', { nname: doc.name }),
+                                name: app._locals.t('dashboard.add'),
                                 link: url + '?invited=' + req.param('id')
                             },
                             onerror
@@ -277,8 +277,8 @@ module.exports = function(app, log){
                         '/'+usersl._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: req.i18next.t('dashboard.added', { nname: doc.name }),
-                            name: req.i18next.t('dashboard.add'),
+                            message: app._locals.t('dashboard.added', { nname: doc.name }),
+                            name: app._locals.t('dashboard.add'),
                             link: url + '?invited=' + req.param('id')
                         },
                         onerror
@@ -337,8 +337,8 @@ module.exports = function(app, log){
                     '/'+req.session.user.id+'/feed',
                     {
                         access_token: req.session.user.access_token,
-                        message: req.i18next.t('dashboard.won', { wname: winner.name, nname: doc.name }),
-                        name: req.i18next.t('dashboard.create'),
+                        message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                        name: app._locals.t('dashboard.create'),
                         link: url
                     },
                     onerror
@@ -350,8 +350,8 @@ module.exports = function(app, log){
                         '/'+users[i]._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: req.i18next.t('dashboard.won', { wname: winner.name, nname: doc.name }),
-                            name: req.i18next.t('dashboard.create'),
+                            message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                            name: app._locals.t('dashboard.create'),
                             link: url
                         },
                         onerror
@@ -364,8 +364,8 @@ module.exports = function(app, log){
                         '/'+voters[i]._id+'/feed',
                         {
                             access_token: req.session.user.access_token,
-                            message: req.i18next.t('dashboard.won', { wname: winner.name, nname: doc.name }),
-                            name: req.i18next.t('dashboard.create'),
+                            message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                            name: app._locals.t('dashboard.create'),
                             link: url
                         },
                         onerror
