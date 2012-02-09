@@ -14,12 +14,13 @@
 	float: right;
 	height: 15px;
 	line-height: 15px;
-	margin: 3px 10px 0 0;
+	margin: 10px 10px 0 0;
 	padding: 0.6em;
 	position: absolute;
 	right: 0;
 	top: 0;
 	z-index: 10;
+    display: none;
 }
 /* red color buttons */
 .ui-btn-up-r { border: 1px solid #953403; background: #2567ab; font-weight: bold; color: #fff; cursor: pointer;  text-shadow: 0 -1px 1px #953403; text-decoration: none; background-image: -moz-linear-gradient(top, #ec4a0b, #ad390c); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ec4a0b),color-stop(1, #ad390c));   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ec4a0b', EndColorStr='#ad390c')"; }

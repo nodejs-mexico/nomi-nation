@@ -69,6 +69,7 @@ function swipe(e){
 		});
 	// insert swipe div into list item
 	$li.prepend($deleteBtn);
+    $deleteBtn.slideToggle();
 }
 function showMsg(title, msg){
 	var dialog = $("#popup");
