@@ -59,17 +59,27 @@ $('#dashboard-appear').live('pagecreate', function(event){
 });
 function swipe(e){
 	// reference the just swiped list item
-	var $li = $(this);
-	// remove all buttons first
-	$('.aDeleteBtn').remove();
+    var $li = $(this);
+    // remove all buttons first
+    $('.aDeleteBtn').parent().fadeTo(500,1);
+    $('.aDeleteBtn').remove();
+    $('.aVoteBtn').remove();
 	// create buttons and div container
 	var $deleteBtn = $('<a>Delete</a>').attr({
 			'class': 'aDeleteBtn ui-btn-up-r',
 			'href': 'some/link/page.html?nID=' + $li.data('nid')
 		});
+    var $voteBtn = $('<a>Vote</a>').attr({
+            'class': 'aVoteBtn ui-btn-up-r',
+			'href': 'some/link/page.html?nID=' + $li.data('nid')
+		});
 	// insert swipe div into list item
+    //TODO: what to do on click function
 	$li.prepend($deleteBtn);
+    $li.prepend($voteBtn);
+    $li.fadeTo(500,0.2);
     $deleteBtn.slideToggle();
+    $voteBtn.slideToggle();
 }
 function showMsg(title, msg){
 	var dialog = $("#popup");
