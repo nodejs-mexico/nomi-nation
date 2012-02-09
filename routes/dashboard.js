@@ -45,9 +45,30 @@ module.exports = function(app, log){
         log.notice('landed on dashboard user: ' + 
             req.session.user.id + ' on: ' + new Date() );
         var invited = req.param('invited');
-        res.render('dashboard', { user: req.session.user, error : req.param('error'), type: 'dashboard', invited: invited });     
+        res.render('dashboard', 
+            { 
+                user: req.session.user, 
+                error : req.param('error'), 
+                type: 'dashboard', 
+                invited: invited                
+            });
     });
-    
+    /**
+     * Dashboardm landing, TODO: erase this
+    */
+    app.get('/dashboardm', function(req, res){
+        //log.notice('landed on dashboard user: ' + 
+        //    req.session.user.id + ' on: ' + new Date() );
+        //var invited = req.param('invited');
+        res.render('dashboardm', 
+            { 
+                user: req.session.user, 
+                error : req.param('error'), 
+                type: 'dashboard', 
+                invited: false,
+                layout: 'layoutm'
+            });
+    });
     /**
      * lista de amigos de facebook
      */

@@ -18,14 +18,19 @@ head
   link(rel="apple-touch-icon", href="/images/apple-touch-icon.png")
   // CSS
   link(rel="stylesheet", href="/stylesheets/jqm.css", type="text/css")
-  link(rel="stylesheet", href="/stylesheets/index.css", type="text/css")
+  - if (type === 'dashboard')
+    link(rel="stylesheet", href="/stylesheets/dashboard.css", type="text/css")
+  - else
+    link(rel="stylesheet", href="/stylesheets/index.css", type="text/css")
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
   script
      window.jQuery \|\| document.write("<script src='/javascripts/lib/jquery-1.7.1.min.js'>\\x3C/script>")
   script(src="/javascripts/lib/jqm.js")
 body
   != body
-
+  script(defer, src='i18next/i18next.js', type='text/javascript')
+  - if (type === 'dashboard')
+    script(defer, src="/javascripts/mscript.js")
   script
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-28828531-1']);

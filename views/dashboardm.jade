@@ -1,0 +1,128 @@
+- if (invited)
+    .invited(invited="#{invited}")
+#dashboard-mine(data-role="page", data-theme="d")
+    div(data-role="header", data-theme="b", data-position="inline")
+        a(href="#", data-icon="refresh") Refresh
+        h1= t('app.name')
+        a(href="#", data-icon="plus") Invite
+        div(data-role="navbar")
+            ul
+                li
+                    a#minel.ui-btn-active(href="#dashboard-mine", data-icon="star") Mine
+                li
+                    a#votedl(href="#dashboard-voted", data-icon="check") Voted
+                li
+                    a#appearl(href="#dashboard-appear", data-icon="alert") Appear
+        ///navbar
+    ///header
+    div(data-role="content")
+        ul#mine(data-role="listview")
+            li.create
+                a.details(href="#") Create one
+    ///content
+
+    div(data-role="footer", data-theme="b", data-position="fixed")
+        label(data-theme="c", for="search-basic") Search nomination:
+        input#searc-basic(data-theme="c", type="search", name="search", value="")
+    ///footer
+
+///page
+#dashboard-voted(data-role="page", data-theme="d")
+    div(data-role="header", data-theme="b", data-position="inline")
+        a(href="#", data-icon="refresh") Refresh
+        h1= t('app.name')
+        a(href="#", data-icon="plus") Invite
+        div(data-role="navbar")
+            ul
+                li
+                    a#minel(href="#dashboard-mine", data-icon="star") Mine
+                li
+                    a#votedl.ui-btn-active(href="#dashboard-voted", data-icon="check") Voted
+                li
+                    a#appearl(href="#dashboard-appear", data-icon="alert") Appear
+        ///navbar
+    ///header
+
+    div(data-role="content")
+        ul#mine(data-role="listview")
+            li.create
+                a.details(href="#") Create one
+    ///content
+
+    div(data-role="footer", data-theme="b", data-position="fixed")
+        label(data-theme="c", for="search-basic") Search nomination:
+        input#searc-basic(data-theme="c", type="search", name="search", value="")
+    ///footer
+
+///page
+#dashboard-appear(data-role="page", data-theme="d")
+
+    div(data-role="header", data-theme="b", data-position="inline")
+        a(href="#", data-icon="refresh") Refresh
+        h1= t('app.name')
+        a(href="#", data-icon="plus") Invite
+        div(data-role="navbar")
+            ul
+                li
+                    a#minel(href="#dashboard-mine", data-icon="star") Mine
+                li
+                    a#votedl(href="#dashboard-voted", data-icon="check") Voted
+                li
+                    a#appearl.ui-btn-active(href="#dashboard-appear", data-icon="alert") Appear
+        ///navbar
+    ///header
+
+    div(data-role="content")
+        ul#mine(data-role="listview")
+            li.create
+                a.details(href="#") Create one
+    ///content
+
+    div(data-role="footer", data-theme="b", data-position="fixed")
+        label(data-theme="c", for="search-basic") Search nomination:
+        input#searc-basic(data-theme="c", type="search", name="search", value="")
+    ///footer
+
+///page
+#popup(data-role="page")
+    
+    div(data-role="header", data-theme="e")
+        h1 Dialog
+    ///header
+
+    div(data-role="content", data-theme="d")
+        h2#title
+        p#msg
+        p
+            a(href="#one", data-rel="back", data-role="button", data-inline="true", data-icon="back") Back
+    ///content
+
+    div(data-role="footer")
+        h4= t('app.name')
+    ///footer
+
+///page popup
+#details(data-role="page")
+
+    div(data-role="header", data-theme="b")
+        a#cancel(href="#", data-icon="delete") Cancel
+        h1 Details
+        a#end(href="#", data-icon="check") End
+    ///header
+
+    div(data-role="content")
+        .name
+        .endD
+        ul.users(data-role="listview")
+            li(data-role="list-divider") Swipe to Vote/Delete
+    ///content
+
+    .ui-bar(data-role="footer", data-theme="b", data-position="fixed")
+        div(data-role="controlgroup", data-type="horizontal")
+            a(href="#", data-rel="back") Back
+            a(href="#", data-icon="plus") Add
+            a(href="#", data-icon="refresh") Refresh
+            a#remove(href="#", data-icon="minus") Remove Me
+    ///footer
+
+///page popup
