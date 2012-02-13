@@ -316,7 +316,7 @@ $(function() {
                         "_id" : $(value).attr('id'),
                         "name" : $(value).text(),
                         "votes" : 0
-                    });                   
+                    });
                 });
                 var ul = users.length;
                 if (ul > 0 && ul <= 1){
@@ -353,7 +353,7 @@ $(function() {
                         }
                         $('.loading').hide();
                     }
-                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_adduser'); });				
+                ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_adduser'); });
 			},
 			Cancel: function() {
 				$( this ).dialog( "close" );

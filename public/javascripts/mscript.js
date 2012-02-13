@@ -1,12 +1,18 @@
-var options = {
-    ns: { namespaces: ['translation'], defaultNs: 'translation'},
-    useLocalStorage: true,
-    resGetPath: 'locales/resources.json?lng=__lng__&ns=__ns__',
-    dynamicLoad: true
-};
-$.i18n.init(options, function() { 
-    //TODO: add more text
-});
+function loadUsers(next){
+    $.getJSON(next || 'http://nomination.cloudno.de/friends', function(data) {
+    if (data.data.length > 0){
+	    var list = $('#lof');
+	    $.each(data.data, function(key, value){
+		list.append('<input type="checkbox" name="'+value.name+'" id="'+value.id+'" />');
+		list.append('<label for="'+value.id+'">'+value.name+'</label>');
+	    });
+	    $('#lof').trigger( 'updatelayout' );
+	    loadUsers(data.paging.next);
+	}else{
+	    return;
+	}
+    }).error(function() { showMsg('dashboard.error', 'dashboard.error_friends'); });
+}
 Date.prototype.setISO8601 = function (string) {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
         "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
@@ -31,6 +37,17 @@ Date.prototype.setISO8601 = function (string) {
     var time = (Number(date) + (offset * 60 * 1000));
     this.setTime(Number(time));
 };
+$( document ).bind( "mobileinit", function() {
+    // Make your jQuery Mobile framework configuration changes here!
+    $.mobile.touchOverflowEnabled = true;
+    $.mobile.allowCrossDomainPages = true;
+});
+function onLoad(){
+    document.addEventListener("deviceready", onDeviceReady, true);
+}
+function onDeviceReady(){
+    
+}
 function loadNominations(type){
 	$.mobile.showPageLoadingMsg();
     $.getJSON('http://nomination.cloudno.de/nominations/'+type, function(data) {
@@ -43,22 +60,21 @@ function loadNominations(type){
             });
             list.listview('refresh');
         }
-        //list.find("label").click(checkOne);
-        //list.find("input").click(checkOne);
         $.mobile.hidePageLoadingMsg();
     }).error(function() { $.mobile.hidePageLoadingMsg(); showMsg('dashboard.error', 'dashboard.warning_nominations'); });
 }
-$('#dashboard-mine').live('pagecreate', function(event){	
-	loadNominations('mine');
+$('#dashboard-mine').live('pagecreate', function(){	
+    loadNominations('mine');
+    loadUsers(null);
 });
-$('#dashboard-voted').live('pagecreate', function(event){	
+$('#dashboard-voted').live('pagecreate', function(){	
     loadNominations('voted');
 });
-$('#dashboard-appear').live('pagecreate', function(event){	
+$('#dashboard-appear').live('pagecreate', function(){	
     loadNominations('appear');
 });
-function swipe(e){
-	// reference the just swiped list item
+function swipe(){
+    // reference the just swiped list item
     var $li = $(this);
     // remove all buttons first
     $('.aDeleteBtn').remove();
@@ -79,24 +95,24 @@ function swipe(e){
     $deleteBtn.slideToggle();
     $voteBtn.slideToggle();
 }
-function showMsg(title, msg){
+function showMsg(err, msg){
 	var dialog = $("#popup");
-	dialog.find("#title").html($.t(title));
-	dialog.find("#msg").html($.t(msg));
+	dialog.find("#title").html(err);
+	dialog.find("#msg").html(msg);
 	$.mobile.changePage( dialog );
 }
 //cargar la nominacion y llenar details
 function showNomination(id, type, refresh){
-	$.mobile.showPageLoadingMsg();
+    $.mobile.showPageLoadingMsg();
     $.getJSON('http://nomination.cloudno.de/nominations/'+id, function(data) {
-        console.log(data);
         if (!data){
             //alert('Du! nominacion ya no existe o termino :(');
             showMsg('dashboard.warning', 'dashboard.warning_erased');
         }
         var details = $('#details');
+	details.find('#attd').attr('nid',id);
+	details.find('#attd').attr('type',type);
         details.find('.name').html(data.name);
-        console.log(data.endDate);
         var daten = new Date();
         daten.setISO8601(data.endDate);
         details.find('.endD').html( daten.getDate()+'/'+(daten.getMonth()+1)+'/'+daten.getUTCFullYear());
@@ -120,13 +136,16 @@ function showNomination(id, type, refresh){
         var usersl = details.find('.users');
         usersl.html('');
         var userl = data.users.length;
+	usersl.hide();
+	usersl.append('<li data-role="list-divider">Swipe to Vote/Delete</li>');
         for (var i=0; i<userl;i++){
-            usersl.append('<li id="'+data.users[i]._id+'" type="'+type+'">'+
-                '<img src="https://graph.facebook.com/'+data.users[i]._id+'/picture"/>'+
+			usersl.append('<li id="'+data.users[i]._id+'" type="'+type+'">'+
+				'<img src="https://graph.facebook.com/'+data.users[i]._id+'/picture"/>'+
                 data.users[i].name+
                 '<span class="ui-li-count count">'+data.users[i].votes+'</span></li>');
         }
         usersl.listview('refresh');
+	usersl.show();
         $('.users li').bind('swiperight', swipe);
         /*var tbody = details.find('.userst').find('tbody');
         tbody.html('');
@@ -154,16 +173,151 @@ function showNomination(id, type, refresh){
             //details.show('slide');
         }*/
         $.mobile.hidePageLoadingMsg();
-    }).error(function(err) {
+    }).error(function() {
         $.mobile.hidePageLoadingMsg();
         showMsg('dashboard.error', 'dashboard.error_showing'); 
     });
 }
-$('.details').live('click', function(ev){
+$('.details').live('click', function(){
 	$.mobile.showPageLoadingMsg();
 	var li = $(this).parents('li');
 	var id = li.attr('id');
 	var type = li.attr('type');
+	$('#details').find('#attd').attr('past',$.mobile.activePage.attr('id'));
 	showNomination(id, type, false);
 	$.mobile.changePage($("#details"));
+});
+$('.create').live('click', function(){
+    $.mobile.changePage( "#newn", { transition: "pop"} );
+});
+$('#newnfs').live('click', function(ev){
+    ev.preventDefault();
+    $.mobile.showPageLoadingMsg();
+    var name = $('#name').val();
+    var date = $('#date').val();
+    if (name!=='' && date !==''){
+	//date = new Date(date.replace(/-/gi, "/"));
+	$('#errornf').html('');
+	$.post("http://nomination.cloudno.de/nominations/create", { name: name, datep: date },
+	    function(data) {
+		var list = $('#mine');
+		list.append('<li id="'+data._id+'" type="mine"><a class="details" href="#">'+data.name+'</a></li>');
+		list.listview('refresh');
+		$.mobile.hidePageLoadingMsg();
+		$.mobile.changePage( "#dashboard-mine" );
+		return false;
+	    }
+	).error(function() {
+	    $.mobile.hidePageLoadingMsg();
+	    $('#errornf').html('Error saving the nomination, try again later');
+	    return false;
+	});
+	return false;
+    }else{
+	$('#errornf').html('Name and date required');
+	$.mobile.hidePageLoadingMsg();
+	return false;
+    }
+});
+$('#adduser').live('click', function(){
+    $.mobile.changePage( "#addf",
+	{
+	    transition: "pop",
+	    reverse: false,
+	    changeHash: false
+	});
+});
+$('#bina').live('click', function(){
+    $.mobile.changePage( "#details" );
+});
+$('.add').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    var users = [];
+    var userp;
+    $('#lof').find(':checked').each(function(){
+	users.push({
+	    "_id" : $(this).attr('id'),
+	    "name" : $(this).attr('name'),
+	    "votes" : 0
+	});
+    });
+    var ul = users.length;
+    if (ul > 0 && ul <= 1){
+	userp = users[0];
+    }else{
+	userp = users;
+    }
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
+    var type = details.find('#attd').attr('type');
+    $.post("http://nomination.cloudno.de/nominations/adduser", { id: nid, users: userp },
+	function(data) {
+	    if (data){
+		$.each(users,function(key, value){
+		    var usersl = details.find('.users');
+		    usersl.append('<li id="'+value._id+'" type="'+type+'">'+
+                '<img src="https://graph.facebook.com/'+value._id+'/picture"/>'+
+                value.name+
+                '<span class="ui-li-count count">0</span></li>');
+		    usersl.listview('refresh');
+		});                            
+		$.mobile.changePage( "#details" );
+	    }else{
+		$.mobile.changePage( "#details" );
+		showMsg('dashboard.error', 'dashboard.error_adduser');
+	    }
+	    $.mobile.hidePageLoadingMsg();
+	}
+    ).error(function() { $.mobile.hidePageLoadingMsg(); showMsg('dashboard.error', 'dashboard.error_adduser'); });
+});
+$('#cancel').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
+    var past = details.find('#attd').attr('past');
+    $.ajax({
+	type: 'POST',
+	url: 'http://nomination.cloudno.de/nominations/erase',
+	data: {id : nid},
+	success: function(data){
+	    if (!data){ showMsg('dashboard.error', 'dashboard.error_erasing'); return;}
+	    $('#'+nid).remove();
+	    while($('#'+nid).length > 0){
+		$('#'+nid).remove();
+	    }
+	    $.mobile.hidePageLoadingMsg();
+	    $.mobile.changePage( '#'+past );
+	},
+	error: function(){
+	    showMsg('dashboard.error', 'dashboard.error_erasing');
+	    $.mobile.hidePageLoadingMsg();
+	},
+	dataType: 'json'
+    });
+});
+$('#end').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
+    var past = details.find('#attd').attr('past');
+    $.ajax({
+	type: 'POST',
+	url: 'http://nomination.cloudno.de/nominations/end',
+	data: {id : nid},
+	success: function(data){
+	    if (!data){ showMsg('dashboard.error', 'dashboard.error_ending'); return;}
+	    if (data === true){ showMsg('dashboard.warning','dashboard.no_users'); }
+	    $('#'+nid).remove();
+	    while($('#'+nid).length > 0){
+		$('#'+nid).remove();
+	    }
+	    $.mobile.hidePageLoadingMsg();
+	    $.mobile.changePage( '#'+past );
+	},
+	error: function(){
+	    showMsg('dashboard.error', 'dashboard.error_ending');
+	    $.mobile.hidePageLoadingMsg();
+	},
+	dataType: 'json'
+    });
 });
