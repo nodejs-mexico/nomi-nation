@@ -1,7 +1,7 @@
 # Nomi-nation
 <img src="http://nomination.cloudno.de/images/ipn.png" width="180px" />
 
-English at the bottom
+### English at the bottom
 
 Aplicacion basada en facebook para que puedas nominar a tus amigos en cualquier tipo de nominacion que se te ocurra, para ver como se hizo sigue este url:
 
@@ -47,7 +47,7 @@ Ayudanos a resolver los `issues` abiertos, propón nueva funcionalidad.
   Otros beta testers :)
   
   
-English
+# English
 
 App based on facebook where you can nominate your friends in any type of nomination that you can think of, to see how was it done, visit:
 
