@@ -110,8 +110,8 @@ function showNomination(id, type, refresh){
             showMsg('dashboard.warning', 'dashboard.warning_erased');
         }
         var details = $('#details');
-	details.find('#attd').attr('nid',id);
-	details.find('#attd').attr('type',type);
+        details.find('#attd').attr('nid',id);
+        details.find('#attd').attr('type',type);
         details.find('.name').html(data.name);
         var daten = new Date();
         daten.setISO8601(data.endDate);
@@ -136,8 +136,8 @@ function showNomination(id, type, refresh){
         var usersl = details.find('.users');
         usersl.html('');
         var userl = data.users.length;
-	usersl.hide();
-	usersl.append('<li data-role="list-divider">Swipe to Vote/Delete</li>');
+        usersl.hide();
+        usersl.append('<li data-role="list-divider">Swipe to Vote/Delete</li>');
         for (var i=0; i<userl;i++){
 			usersl.append('<li id="'+data.users[i]._id+'" type="'+type+'">'+
 				'<img src="https://graph.facebook.com/'+data.users[i]._id+'/picture"/>'+
@@ -145,7 +145,7 @@ function showNomination(id, type, refresh){
                 '<span class="ui-li-count count">'+data.users[i].votes+'</span></li>');
         }
         usersl.listview('refresh');
-	usersl.show();
+        usersl.show();
         $('.users li').bind('swiperight', swipe);
         /*var tbody = details.find('.userst').find('tbody');
         tbody.html('');

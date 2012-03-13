@@ -54,6 +54,7 @@
             .ui-block-b
             .ui-block-c
                 a(href="#", data-role="button", data-theme="b", data-icon="refresh") Refresh
+        br
         ul#voted(data-role="listview")
             li(data-role="list-divider") Select to see the details
     ///content
@@ -87,6 +88,7 @@
             .ui-block-b
             .ui-block-c
                 a(href="#", data-role="button", data-theme="b", data-icon="refresh") Refresh
+        br
         ul#appear(data-role="listview")
             li(data-role="list-divider") Select to see the details
     ///content
@@ -138,9 +140,6 @@
 
 ///page new nomination
 #addf(data-role="page")
-
-
-#addf(data-role="page")
     div(data-role="header", data-theme="e")
         h1 Add friends
     //header
@@ -174,7 +173,7 @@
     .ui-bar(data-role="footer", data-theme="b", data-position="fixed")
         div(data-role="controlgroup", data-type="horizontal")
             a(href="#", data-rel="back", data-icon="back") Back
-            a(href="#", data-icon="plus") Add
+            a#adduser(href="#", data-icon="plus") Add
             a(href="#", data-icon="refresh") Refresh
             a#remove(href="#", data-icon="minus") Remove Me
     ///footer
