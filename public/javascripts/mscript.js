@@ -139,7 +139,7 @@ function showNomination(id, type, refresh){
         usersl.hide();
         usersl.append('<li data-role="list-divider">Swipe to Vote/Delete</li>');
         for (var i=0; i<userl;i++){
-			usersl.append('<li id="'+data.users[i]._id+'" type="'+type+'">'+
+			usersl.append('<li id="'+data.users[i]._id+'" name="'+data.users[i].name+'" type="'+type+'">'+
 				'<img src="https://graph.facebook.com/'+data.users[i]._id+'/picture"/>'+
                 data.users[i].name+
                 '<span class="ui-li-count count">'+data.users[i].votes+'</span></li>');
@@ -258,7 +258,7 @@ $('.add').live('click', function(){
 	    if (data){
             $.each(users,function(key, value){
                 var usersl = details.find('.users');
-                usersl.append('<li id="'+value._id+'" type="'+type+'">'+
+                usersl.append('<li id="'+value._id+'" name="'+value.name+'" type="'+type+'">'+
                     '<img src="https://graph.facebook.com/'+value._id+'/picture"/>'+
                     value.name+
                     '<span class="ui-li-count count">0</span></li>');
@@ -326,8 +326,27 @@ $('#end').live('click', function(){
 	dataType: 'json'
     });
 });
-$('.aDeleteBtn').live('click', function(){
+$('.aDeleteBtn').live('click', function(ev){
+    ev.preventDefault();
     $.mobile.showPageLoadingMsg();
     var li = $(this).parents('li');
-    console.log(li);
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
+    console.log(nid);
+    var user = {
+        _id : li.attr("id"),
+        name : li.attr("name"),
+        votes : li.find(".count").text()
+    };
+    console.log(user);
+    /*$.post("/nominations/eraseuser", { id: nid, user: user },
+        function(data) {
+            if (data){
+               li.remove();
+            }else{
+                showMsg('dashboard.error', 'dashboard.error_erasing_user');
+            }
+            $('.loading').hide();
+        }
+    ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_erasing_user'); });*/
 });
