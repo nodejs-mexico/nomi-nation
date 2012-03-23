@@ -332,13 +332,11 @@ $('.aDeleteBtn').live('click', function(ev){
     var li = $(this).parents('li');
     var details = $('#details');
     var nid = details.find('#attd').attr('nid');
-    console.log(nid);
     var user = {
         _id : li.attr("id"),
         name : li.attr("name"),
         votes : li.find(".count").text()
     };
-    console.log(user);
     $.post("/nominations/eraseuser", { id: nid, user: user },
         function(data) {
             if (data){
@@ -359,7 +357,7 @@ $('.aVoteBtn').live('click', function(ev){
     $.mobile.showPageLoadingMsg();
     var li = $(this).parents('li');
     var id = li.attr('id');
-    var nid = $('.details').attr('nid');
+    var nid = $('#details').attr('nid');
     //var name = $('.details').find('legend').text();
     $.post("/nominations/vote", { id: nid, userid: id },
         function(data) {
