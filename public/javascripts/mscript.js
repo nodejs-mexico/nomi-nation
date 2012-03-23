@@ -200,12 +200,14 @@ $('#newnfs').live('click', function(ev){
 	$('#errornf').html('');
 	$.post("http://nomination.cloudno.de/nominations/create", { name: name, datep: date },
 	    function(data) {
-		var list = $('#mine');
-		list.append('<li id="'+data._id+'" type="mine"><a class="details" href="#">'+data.name+'</a></li>');
-		list.listview('refresh');
-		$.mobile.hidePageLoadingMsg();
-		$.mobile.changePage( "#dashboard-mine" );
-		return false;
+            var list = $('#mine');
+            list.append('<li id="' + 
+                data._id + '" type="mine"><a class="details" href="#">' + 
+                data.name + '</a></li>');
+            list.listview('refresh');
+            $.mobile.hidePageLoadingMsg();
+            $.mobile.changePage( "#dashboard-mine" );
+            return false;
 	    }
 	).error(function() {
 	    $.mobile.hidePageLoadingMsg();
@@ -235,17 +237,17 @@ $('.add').live('click', function(){
     var users = [];
     var userp;
     $('#lof').find(':checked').each(function(){
-	users.push({
-	    "_id" : $(this).attr('id'),
-	    "name" : $(this).attr('name'),
-	    "votes" : 0
-	});
+        users.push({
+            "_id" : $(this).attr('id'),
+            "name" : $(this).attr('name'),
+            "votes" : 0
+        });
     });
     var ul = users.length;
     if (ul > 0 && ul <= 1){
-	userp = users[0];
+	    userp = users[0];
     }else{
-	userp = users;
+	    userp = users;
     }
     var details = $('#details');
     var nid = details.find('#attd').attr('nid');
@@ -253,22 +255,24 @@ $('.add').live('click', function(){
     $.post("http://nomination.cloudno.de/nominations/adduser", { id: nid, users: userp },
 	function(data) {
 	    if (data){
-		$.each(users,function(key, value){
-		    var usersl = details.find('.users');
-		    usersl.append('<li id="'+value._id+'" type="'+type+'">'+
-                '<img src="https://graph.facebook.com/'+value._id+'/picture"/>'+
-                value.name+
-                '<span class="ui-li-count count">0</span></li>');
-		    usersl.listview('refresh');
-		});                            
-		$.mobile.changePage( "#details" );
+            $.each(users,function(key, value){
+                var usersl = details.find('.users');
+                usersl.append('<li id="'+value._id+'" type="'+type+'">'+
+                    '<img src="https://graph.facebook.com/'+value._id+'/picture"/>'+
+                    value.name+
+                    '<span class="ui-li-count count">0</span></li>');
+                usersl.listview('refresh');
+            });
+            $.mobile.changePage( "#details" );
 	    }else{
-		$.mobile.changePage( "#details" );
-		showMsg('dashboard.error', 'dashboard.error_adduser');
+		    $.mobile.changePage( "#details" );
+		    showMsg('dashboard.error', 'dashboard.error_adduser');
 	    }
 	    $.mobile.hidePageLoadingMsg();
-	}
-    ).error(function() { $.mobile.hidePageLoadingMsg(); showMsg('dashboard.error', 'dashboard.error_adduser'); });
+	}).error(function() { 
+        $.mobile.hidePageLoadingMsg(); 
+        showMsg('dashboard.error', 'dashboard.error_adduser'); 
+    });
 });
 $('#cancel').live('click', function(){
     $.mobile.showPageLoadingMsg();
