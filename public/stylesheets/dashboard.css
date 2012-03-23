@@ -3,7 +3,7 @@
     float: left;
 }
 .endD{
-	float: right;
+    float: right;
 }
 .users{
 	clear: both;
@@ -40,7 +40,7 @@
 
 .ui-btn-up-r, .ui-btn-hover-r, .ui-btn-down-r { font-family: Helvetica, Arial, sans-serif; }
 /* blue color buttons */
-.ui-btn-up-bl { border: 1px solid #036596; background: #2567ab; font-weight: bold; color: #fff; cursor: pointer;  text-shadow: 0 -1px 1px #953403; text-decoration: none; background-image: -moz-linear-gradient(top, #ec4a0b, #ad390c); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ec4a0b),color-stop(1, #ad390c));   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ec4a0b', EndColorStr='#ad390c')"; }
+.ui-btn-up-bl { border: 1px solid #036596; background: #2567ab; font-weight: bold; color: #fff; cursor: pointer;  text-shadow: 0 -1px 1px #036596; text-decoration: none; background-image: -moz-linear-gradient(top, #ec4a0b, #036596); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ec4a0b),color-stop(1, #036596));   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ec4a0b', EndColorStr='#036596')"; }
 
 .ui-btn-up-bl a.ui-link-inherit { color: #fff; }
 

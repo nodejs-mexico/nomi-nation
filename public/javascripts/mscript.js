@@ -146,7 +146,7 @@ function showNomination(id, type, refresh){
         }
         usersl.listview('refresh');
         usersl.show();
-        $('.users li').bind('swiperight', swipe);
+        $('.users li').bind('swiperight swipeleft', swipe);
         /*var tbody = details.find('.userst').find('tbody');
         tbody.html('');
         var userl = data.users.length;
@@ -222,6 +222,7 @@ $('#newnfs').live('click', function(ev){
     }
 });
 $('#adduser').live('click', function(){
+    $.mobile.showPageLoadingMsg();
     $.mobile.changePage( "#addf",
 	{
 	    transition: "pop",
@@ -324,4 +325,9 @@ $('#end').live('click', function(){
 	},
 	dataType: 'json'
     });
+});
+$('.aDeleteBtn').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    var li = $(this).parents('li');
+    console.log(li);
 });
