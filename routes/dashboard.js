@@ -334,41 +334,29 @@ module.exports = function(app, log){
      * Terminar nominacion
      */
     app.post('/nominations/end', checkUser, function(req, res){
-        //TODO: end the nomination and declare a winner
+        //TODO: end the nomination and declare a winner automatically
         var id = req.param('id');
         nominator.findNomination(id,function(err, doc){
             if (err) { log.debug('error getting nominations:' + err); res.json(null); return; }
-            var users = doc.users;
-            var usersl = doc.users.length;
-            var voters = doc.voters;
-            var votersl = doc.voters.length;
-            if (usersl > 0){
-                var winner = users[0];
-                for (var j=1; j<usersl;j++){
-                    if (winner.votes < users[j].votes){
-                        winner = users[j];
+            if (doc){
+                var users = doc.users;
+                var usersl = doc.users.length;
+                var voters = doc.voters;
+                var votersl = doc.voters.length;
+                if (usersl > 0){
+                    var winner = users[0];
+                    for (var j=1; j<usersl;j++){
+                        if (winner.votes < users[j].votes){
+                            winner = users[j];
+                        }
                     }
-                }
-                res.json(winner);
-                var onerror = function (error) {
-                                if (error) { log.debug('error posting on voted user'); return; }
-                            };
-                fb.apiCall(
-                    'POST',
-                    '/'+req.session.user.id+'/feed',
-                    {
-                        access_token: req.session.user.access_token,
-                        message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
-                        name: app._locals.t('dashboard.create'),
-                        link: url
-                    },
-                    onerror
-                );
-                for (var i=0;i<usersl;i++){
-                    if (users[i]._id == req.session.user.id){ continue; }
+                    res.json(winner);
+                    var onerror = function (error) {
+                                    if (error) { log.debug('error posting on voted user'); return; }
+                                };
                     fb.apiCall(
                         'POST',
-                        '/'+users[i]._id+'/feed',
+                        '/'+req.session.user.id+'/feed',
                         {
                             access_token: req.session.user.access_token,
                             message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
@@ -377,24 +365,39 @@ module.exports = function(app, log){
                         },
                         onerror
                     );
+                    for (var i=0;i<usersl;i++){
+                        if (users[i]._id == req.session.user.id){ continue; }
+                        fb.apiCall(
+                            'POST',
+                            '/'+users[i]._id+'/feed',
+                            {
+                                access_token: req.session.user.access_token,
+                                message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                                name: app._locals.t('dashboard.create'),
+                                link: url
+                            },
+                            onerror
+                        );
+                    }
+                    for (i=0;i<votersl;i++){
+                        if (voters[i]._id == req.session.user.id){ continue; }
+                        fb.apiCall(
+                            'POST',
+                            '/'+voters[i]._id+'/feed',
+                            {
+                                access_token: req.session.user.access_token,
+                                message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                                name: app._locals.t('dashboard.create'),
+                                link: url
+                            },
+                            onerror
+                        );
+                    }
+                }else{
+                    res.json(true);
                 }
-                for (i=0;i<votersl;i++){
-                    if (voters[i]._id == req.session.user.id){ continue; }
-                    fb.apiCall(
-                        'POST',
-                        '/'+voters[i]._id+'/feed',
-                        {
-                            access_token: req.session.user.access_token,
-                            message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
-                            name: app._locals.t('dashboard.create'),
-                            link: url
-                        },
-                        onerror
-                    );
-                }
-            }else{
-                res.json(true);
             }
+            res.json(true);
             nominator.eraseNomination(id, function(err){
                 if (err) { log.debug('error erasing nomination'); return; }
                 log.notice('nomination '+ req.param('name') +' erased by: ' + req.session.user.id );
