@@ -9,6 +9,7 @@ function loadUsers(next){
 	    $('#lof').trigger( 'updatelayout' );
 	    loadUsers(data.paging.next);
 	}else{
+        $('#lof').trigger( 'updatelayout' );
 	    return;
 	}
     }).error(function() { showMsg('dashboard.error', 'dashboard.error_friends'); });
