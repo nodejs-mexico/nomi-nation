@@ -339,14 +339,49 @@ $('.aDeleteBtn').live('click', function(ev){
         votes : li.find(".count").text()
     };
     console.log(user);
-    /*$.post("/nominations/eraseuser", { id: nid, user: user },
+    $.post("/nominations/eraseuser", { id: nid, user: user },
         function(data) {
             if (data){
                li.remove();
+               var usersl = details.find('.users');
+               usersl.listview('refresh');
             }else{
                 showMsg('dashboard.error', 'dashboard.error_erasing_user');
             }
-            $('.loading').hide();
+            $.mobile.hidePageLoadingMsg();
         }
-    ).error(function() { $('.loading').hide(); showMsg('dashboard.error', 'dashboard.error_erasing_user'); });*/
+    ).error(function() { $.mobile.hidePageLoadingMsg();
+        showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
+});
+
+$('.aVoteBtn').live('click', function(ev){
+    ev.preventDefault();
+    $.mobile.showPageLoadingMsg();
+    var li = $(this).parents('li');
+    var id = li.attr('id');
+    var nid = $('.details').attr('nid');
+    //var name = $('.details').find('legend').text();
+    $.post("/nominations/vote", { id: nid, userid: id },
+        function(data) {
+            if (data){
+                var votes = li.find('.count');
+                votes.html(data);
+                //updat voted list
+                /*var list = $('#voted');
+                var found = list.find('li:containsExactly('+name+')');
+                if (found.length < 0){
+                    var li = $('<li id="'+nid+'" type="voted"><input type="checkbox" /><label>'+name+'</label></li>');
+                    list.append(li);
+                    li.find("label").click(checkOne);
+                    li.find("input").click(checkOne);
+                }*/
+            }else{
+                showMsg('dashboard.error', 'dashboard.error_voting');
+            }
+            $.mobile.hidePageLoadingMsg();
+        }
+    ).error(function() {
+        $.mobile.hidePageLoadingMsg();
+        showMsg('dashboard.error', 'dashboard.error_voting'); 
+    });
 });
