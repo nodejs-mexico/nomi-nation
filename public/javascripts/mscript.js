@@ -82,11 +82,11 @@ function swipe(){
 	// create buttons and div container
 	var $deleteBtn = $('<a>Delete</a>').attr({
 			'class': 'aDeleteBtn ui-btn-up-r',
-			'href': 'some/link/page.html?nID=' + $li.data('nid')
+			'href': '#'
 		});
     var $voteBtn = $('<a>Vote</a>').attr({
             'class': 'aVoteBtn ui-btn-up-bl',
-			'href': 'some/link/page.html?nID=' + $li.data('nid')
+			'href': '#'
 		});
 	// insert swipe div into list item
     //TODO: what to do on click function
@@ -350,6 +350,8 @@ $('.aDeleteBtn').live('click', function(ev){
         }
     ).error(function() { $.mobile.hidePageLoadingMsg();
         showMsg('dashboard.error', 'dashboard.error_erasing_user'); });
+    $('.aVoteBtn').slideToggle();
+    $('.aDeleteBtn').slideToggle();
 });
 
 $('.aVoteBtn').live('click', function(ev){
@@ -383,4 +385,6 @@ $('.aVoteBtn').live('click', function(ev){
         $.mobile.hidePageLoadingMsg();
         showMsg('dashboard.error', 'dashboard.error_voting'); 
     });
+    $('.aVoteBtn').slideToggle();
+    $('.aDeleteBtn').slideToggle();
 });
