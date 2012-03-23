@@ -353,11 +353,12 @@ $('.aDeleteBtn').live('click', function(ev){
 });
 
 $('.aVoteBtn').live('click', function(ev){
-    ev.preventDefault();
     $.mobile.showPageLoadingMsg();
+    ev.preventDefault();
     var li = $(this).parents('li');
     var id = li.attr('id');
-    var nid = $('#details').attr('nid');
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
     //var name = $('.details').find('legend').text();
     $.post("/nominations/vote", { id: nid, userid: id },
         function(data) {
