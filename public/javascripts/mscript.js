@@ -234,10 +234,12 @@ $('#adduser').live('click', function(){
 });
 $('.doinvite').live('click', function(){
     $.mobile.showPageLoadingMsg();
-    $('.invite').show();
+    $('.invite').show
     $.mobile.changePage( "#addf",
     {
-	    transition: "pop"
+	    transition: "pop",
+        reverse: false,
+	    changeHash: false
 	});
 });
 $('.invite').live('click', function(){
@@ -260,8 +262,8 @@ $('.invite').live('click', function(){
     $.post("/invite", { users: userp },
         function(data) {
             if (data){
-                showMsg('dashboard.warning', 'dashboard.invited'); 
                 history.back();
+                showMsg('dashboard.warning', 'dashboard.invited'); 
             }else{
                 showMsg('dashboard.error', 'dashboard.warning_invited');
             }
