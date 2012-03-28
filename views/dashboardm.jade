@@ -3,7 +3,7 @@
 #dashboard-mine(data-role="page", data-theme="d")
     div(data-role="header", data-theme="b", data-position="inline")
         h1= t('app.name')
-        a(href="#", data-icon="plus", class="ui-btn-right") Invite
+        a.doinvite(href="#", data-icon="plus", class="ui-btn-right") Invite
         div(data-role="navbar")
             ul
                 li
@@ -34,7 +34,7 @@
 #dashboard-voted(data-role="page", data-theme="d")
     div(data-role="header", data-theme="b", data-position="inline")
         h1= t('app.name')
-        a(href="#", data-icon="plus", class="ui-btn-right") Invite
+        a.doinvite(href="#", data-icon="plus", class="ui-btn-right") Invite
         div(data-role="navbar")
             ul
                 li
@@ -67,7 +67,7 @@
 
     div(data-role="header", data-theme="b", data-position="inline")
         h1= t('app.name')
-        a(href="#", data-icon="plus", class="ui-btn-right") Invite
+        a.doinvite(href="#", data-icon="plus", class="ui-btn-right") Invite
         div(data-role="navbar")
             ul
                 li
@@ -149,6 +149,7 @@
     div.ui-bar(data-role="footer", data-theme="b", data-position="fixed")
         a#bina(href="#", data-icon="back") Back
         a.add(href="#", data-role="button", data-theme="b") Add
+        a.invite(href="#", data-role="button", data-theme="b") Invite
 
 ///page add friends
 #details(data-role="page")

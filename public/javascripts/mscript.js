@@ -224,12 +224,53 @@ $('#newnfs').live('click', function(ev){
 });
 $('#adduser').live('click', function(){
     $.mobile.showPageLoadingMsg();
+    $('.invite').hide();
     $.mobile.changePage( "#addf",
 	{
 	    transition: "pop",
 	    reverse: false,
 	    changeHash: false
 	});
+});
+$('.doinvite').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    $('.invite').show();
+    $.mobile.changePage( "#addf",
+    {
+	    transition: "pop"
+	});
+});
+$('.invite').live('click', function(){
+    $.mobile.showPageLoadingMsg();
+    var users = [];
+    var userp;
+    $('#lof').find(':checked').each(function(){
+        users.push({
+            "_id" : $(this).attr('id'),
+            "name" : $(this).attr('name'),
+            "votes" : 0
+        });
+    });
+    var ul = users.length;
+    if (ul > 0 && ul <= 1){
+        userp = users[0];
+    }else{
+	    userp = users;
+    }
+    $.post("/invite", { users: userp },
+        function(data) {
+            if (data){
+                showMsg('dashboard.warning', 'dashboard.invited'); 
+                history.back();
+            }else{
+                showMsg('dashboard.error', 'dashboard.warning_invited');
+            }
+            $.mobile.hidePageLoadingMsg();
+        }
+    ).error(function() { 
+        $.mobile.hidePageLoadingMsg();
+        showMsg('dashboard.warning', 'dashboard.warning_invited'); 
+    });
 });
 $('#bina').live('click', function(){
     $.mobile.changePage( "#details" );

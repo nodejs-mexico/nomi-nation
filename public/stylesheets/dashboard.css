@@ -53,3 +53,7 @@
 .ui-btn-down-bl a.ui-link-inherit { color: #fff; }
 
 .ui-btn-up-bl, .ui-btn-hover-bl, .ui-btn-down-bl { font-family: Helvetica, Arial, sans-serif; }
+
+.invite{
+    display: none;
+}
