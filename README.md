@@ -33,6 +33,8 @@ Ayudanos a resolver los `issues` abiertos, propón nueva funcionalidad.
   Copyright (C) 2011  Ivan Torres -MrPix
 
   See license
+  
+  <a href="http://www.ipseitycloud.com"><img src="http://ipseitycloud.com/cld/images/ipc_small.png" /></a>
 
 ## Contribuidores
 
@@ -81,6 +83,8 @@ Help us solve the `issues` or tell us what do you want to see in the application
   Copyright (C) 2012  Ivan Torres -MrPix
 
   See license
+  
+  <a href="http://www.ipseitycloud.com"><img src="http://ipseitycloud.com/cld/images/ipc_small.png" /></a>
 
 ## Contributors
 
