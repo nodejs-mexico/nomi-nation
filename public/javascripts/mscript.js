@@ -90,7 +90,6 @@ function swipe(){
 			'href': '#'
 		});
 	// insert swipe div into list item
-    //TODO: what to do on click function
 	$li.prepend($deleteBtn);
     $li.prepend($voteBtn);
     $deleteBtn.slideToggle();
@@ -234,7 +233,7 @@ $('#adduser').live('click', function(){
 });
 $('.doinvite').live('click', function(){
     $.mobile.showPageLoadingMsg();
-    $('.invite').show
+    $('.invite').show();
     $.mobile.changePage( "#addf",
     {
 	    transition: "pop",
@@ -263,7 +262,7 @@ $('.invite').live('click', function(){
         function(data) {
             if (data){
                 history.back();
-                showMsg('dashboard.warning', 'dashboard.invited'); 
+                //showMsg('dashboard.warning', 'dashboard.invited'); 
             }else{
                 showMsg('dashboard.error', 'dashboard.warning_invited');
             }
@@ -432,3 +431,44 @@ $('.aVoteBtn').live('click', function(ev){
     $('.aVoteBtn').slideToggle();
     $('.aDeleteBtn').slideToggle();
 });
+
+//para remover al usuario actual de la nominacion
+$('#remove').click(function(ev){
+    $.mobile.showPageLoadingMsg();
+    ev.preventDefault();
+    var uid = $(this).attr('uid');
+    var details = $('#details');
+    var nid = details.find('#attd').attr('nid');
+    $.post("/nominations/eraseuser", { id: nid, user: 'eraseme' },
+        function(data) {
+            if (data){                    
+                //get the row of the user and erase it
+                $('.users').find('#'+uid).remove();
+                var usersl = details.find('.users');
+                usersl.listview('refresh');
+            }else{
+                showMsg('dashboard.error', 'dashboard.error_removing');
+            }
+            $.mobile.hidePageLoadingMsg();
+        }
+    ).error(function() { 
+        $.mobile.hidePageLoadingMsg(); 
+        showMsg('dashboard.error', 'dashboard.error_removing'); 
+    }); 
+});
+//refresh the list of nominations
+$('.refresh').click(function (ev) {
+    $.mobile.showPageLoadingMsg();
+    ev.preventDefault();
+    //get the actual page id
+    var pageid = $.mobile.activePage.attr('id').split('-')[1];
+    //erase the actual list
+    var divider = $('#'+pageid).find('li')[0];
+    $('#'+pageid).find('li').remove();
+    //add the divider
+    $('#'+pageid).append(divider);
+    //reload the nominations
+    loadNominations(pageid);
+});
+
+

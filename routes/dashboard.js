@@ -45,16 +45,21 @@ module.exports = function(app, log){
         log.notice('landed on dashboard user: ' + 
             req.session.user.id + ' on: ' + new Date() );
         var invited = req.param('invited');
-        res.render('dashboard', 
-            { 
-                user: req.session.user, 
-                error : req.param('error'), 
-                type: 'dashboard', 
-                invited: invited                
-            });
+        var ua = req.header('user-agent');
+        if(/mobile/i.test(ua)) {
+            res.redirect('/dashboardm');
+        }else{
+            res.render('dashboard', 
+                { 
+                    user: req.session.user, 
+                    error : req.param('error'), 
+                    type: 'dashboard', 
+                    invited: invited                
+                });
+        }
     });
     /**
-     * Dashboardm landing, TODO: erase this
+     * Dashboardm landing
     */
     app.get('/dashboardm', function(req, res){
         //log.notice('landed on dashboard user: ' + 

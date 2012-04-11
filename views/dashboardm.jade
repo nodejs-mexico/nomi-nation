@@ -19,7 +19,7 @@
             .ui-block-a
                 a.create(href="#", data-role="button", data-theme="b") Create
             .ui-block-b
-                a(href="#", data-role="button", data-theme="b", data-icon="refresh") Refresh
+                a.refresh(href="#", data-role="button", data-theme="b", data-icon="refresh") #{t('dashboard.refresh')}
         br
         ul#mine(data-role="listview")
             li(data-role="list-divider") Select to see the details
@@ -51,7 +51,7 @@
             .ui-block-a
                 a.create(href="#", data-role="button", data-theme="b") Create
             .ui-block-b
-                a(href="#", data-role="button", data-theme="b", data-icon="refresh") Refresh
+                a.refresh(href="#", data-role="button", data-theme="b", data-icon="refresh") #{t('dashboard.refresh')}
         br
         ul#voted(data-role="listview")
             li(data-role="list-divider") Select to see the details
@@ -84,7 +84,7 @@
             .ui-block-a
                 a.create(href="#", data-role="button", data-theme="b") Create
             .ui-block-b
-                a(href="#", data-role="button", data-theme="b", data-icon="refresh") Refresh
+                a.refresh(href="#", data-role="button", data-theme="b", data-icon="refresh") #{t('dashboard.refresh')}
         br
         ul#appear(data-role="listview")
             li(data-role="list-divider") Select to see the details
@@ -173,8 +173,7 @@
         div(data-role="controlgroup", data-type="horizontal")
             a(href="#", data-rel="back", data-icon="back") Back
             a#adduser(href="#", data-icon="plus") Add
-            a(href="#", data-icon="refresh") Refresh
-            a#remove(href="#", data-icon="minus") Remove Me
+            a#remove(href="#", data-icon="minus", uid="#{user.id}") #{t('dashboard.remove_me')}
     ///footer
 
 ///page details
