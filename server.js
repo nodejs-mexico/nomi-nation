@@ -9,7 +9,11 @@ var express = require('express'),
     i18next = require('i18next'),
     MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
     session_store = new MemoryStore(),
-    port = process.env.C9_PORT || 3000;
+    port = process.env.C9_PORT || 3000,
+    schedule = require('node-schedule'),
+    fb = require('facebook-js'),
+    url = 'http://nomination.cloudno.de/',
+    nominator = require('./controllers/nominator.js');
 
 var app = module.exports = express.createServer();
 
@@ -60,6 +64,87 @@ i18next.registerAppHelper(app)
 // Routes
 require('./routes/index')(app, log);
 require('./routes/dashboard')(app, log);
+
+//add process to kill old nomination
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [0, new schedule.Range(1, 6)];
+rule.hour = 1;
+rule.minute = 1;
+
+function endNomination(id, doc){
+    if (doc.ownerdata){
+        var users = doc.users;
+        var usersl = doc.users.length;
+        var voters = doc.voters;
+        var votersl = doc.voters.length;
+        if (usersl > 0){
+            var winner = users[0];
+            for (var j=1; j<usersl;j++){
+                if (winner.votes < users[j].votes){
+                    winner = users[j];
+                }
+            }
+            var onerror = function (error) {
+                            if (error) { log.debug('error posting on voted user'); return; }
+                        };
+            fb.apiCall(
+                'POST',
+                '/'+doc.owner+'/feed',
+                {
+                    access_token: doc.ownerdata,
+                    message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                    name: app._locals.t('dashboard.create'),
+                    link: url
+                },
+                onerror
+            );
+            for (var i=0;i<usersl;i++){
+                if (users[i]._id == doc.owner){ continue; }
+                fb.apiCall(
+                    'POST',
+                    '/'+users[i]._id+'/feed',
+                    {
+                        access_token: doc.ownerdata,
+                        message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                        name: app._locals.t('dashboard.create'),
+                        link: url
+                    },
+                    onerror
+                );
+            }
+            for (i=0;i<votersl;i++){
+                if (voters[i]._id == doc.owner){ continue; }
+                fb.apiCall(
+                    'POST',
+                    '/'+voters[i]._id+'/feed',
+                    {
+                        access_token: doc.ownerdata,
+                        message: app._locals.t('dashboard.won', { wname: winner.name, nname: doc.name }),
+                        name: app._locals.t('dashboard.create'),
+                        link: url
+                    },
+                    onerror
+                );
+            }
+        }
+    }
+    nominator.eraseNomination(id, function(err){
+        if (err) { log.debug('error erasing nomination'); return; }
+        log.notice('nomination '+ id +' erased by: cron ' );
+    });
+}
+
+
+schedule.scheduleJob(rule, function(){
+    nominator.findOldNomination(function(err, doc){
+        if (err) { log.debug('error ending nominations with cron'); return; }
+        //console.log(doc);
+        for (var i=0; i<doc.length;i++){
+            endNomination(doc._id, doc);
+            //console.log(doc[i]._id, doc[i].owner, doc[i].ownerdata);
+        }
+    });
+});
 
 if (!module.parent) {
     app.listen(port);

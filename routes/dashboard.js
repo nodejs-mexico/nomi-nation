@@ -6,8 +6,7 @@
 var fb = require('facebook-js'),
     url = 'http://nomination.cloudno.de/';
 
-function findIndexByKeyValue(obj, key, value)
-{
+function findIndexByKeyValue(obj, key, value){
     var l = obj.length;
     for (var i = 0; i < l; i++) {
         if (obj[i][key] == value) {
@@ -16,6 +15,7 @@ function findIndexByKeyValue(obj, key, value)
 	}
 	return -1;
 }
+
 
 module.exports = function(app, log){
     var nominator = require('../controllers/nominator.js');
@@ -28,7 +28,7 @@ module.exports = function(app, log){
             res.send(err.message);
         }        
     });
-
+    
     function checkUser(req, res, next){
         if (req.session.user){
             next();
@@ -146,6 +146,7 @@ module.exports = function(app, log){
         var nomination = {
             'name' : req.param('name'),
             'owner' : req.session.user.id,
+            'ownerdata' : req.session.user.access_token,
             'endDate' : new Date(req.param('datep')),
             'category' : "cat1",
             'sub_cat' : "sub1",

@@ -10,7 +10,8 @@ var express = require('express'),
     Db = require('mongodb').Db,
     mongoStore = require('connect-mongodb'),
     session_store,
-    port = process.env.PORT || 3000;
+    port = process.env.PORT || 3000,
+    schedule = require('node-schedule');
     
 Db.connect("mongodb://nominator:nominat0r@ds029257.mongolab.com:29257/nomination-sessions", function(err, db) {
     session_store = new mongoStore({db: db});
@@ -62,6 +63,14 @@ i18next.registerAppHelper(app)
 // Routes
 require('./routes/index')(app, log);
 require('./routes/dashboard')(app, log);
+
+//add process to kill old nomination
+var rule = new schedule.RecurrenceRule();
+rule.minute = 51;
+
+schedule.scheduleJob(rule, function(){
+    console.log('The answer to life, the universe, and everything!');
+});
 
 if (!module.parent) {
     app.listen(port);

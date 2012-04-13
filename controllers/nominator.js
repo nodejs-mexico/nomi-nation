@@ -228,5 +228,14 @@ NOMINATOR.findNomination = function(nomId, callback) {
     Nomination.findById(nomId, callback);
 };
 
+/**
+ * find old nominations
+ * @callback function
+ * 
+*/
+NOMINATOR.findOldNomination = function(callback) {
+    Nomination.find({"endDate": {"$lt": new Date()}}, callback);
+};
+
 // Exporting functions
 module.exports = NOMINATOR;

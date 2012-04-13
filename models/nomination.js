@@ -26,6 +26,7 @@ function defineModels(mongoose, fn) {
         'users' : [User], //users added to this nomination
         'voters':{type:Array, default:[]}, //all the dudes that vote this nomination
         'category' : String,
+        'ownerdata' : String,
         'sub_cat' : String,
         'active' : Boolean, //nomination finished
         'erased' : [String] //people erased by facebook id, we wont be able to re-add them
