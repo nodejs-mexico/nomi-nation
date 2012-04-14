@@ -9,11 +9,11 @@ var express = require('express'),
     i18next = require('i18next'),
     MemoryStore = require('express/node_modules/connect/lib/middleware/session/memory'),
     session_store = new MemoryStore(),
-    port = process.env.C9_PORT || 3000,
+    port = process.env.app_port || 3000/*,
     schedule = require('node-schedule'),
     fb = require('facebook-js'),
     url = 'http://nomination.cloudno.de/',
-    nominator = require('./controllers/nominator.js');
+    nominator = require('./controllers/nominator.js')*/;
 
 var app = module.exports = express.createServer();
 
@@ -65,7 +65,7 @@ i18next.registerAppHelper(app)
 require('./routes/index')(app, log);
 require('./routes/dashboard')(app, log);
 
-//add process to kill old nomination
+/*add process to kill old nomination
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(1, 6)];
 rule.hour = 1;
@@ -144,7 +144,7 @@ schedule.scheduleJob(rule, function(){
             //console.log(doc[i]._id, doc[i].owner, doc[i].ownerdata);
         }
     });
-});
+});*/
 
 if (!module.parent) {
     app.listen(port);
