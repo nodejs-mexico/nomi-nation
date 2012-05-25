@@ -71,7 +71,26 @@ module.exports = function(app, log){
         }else{*/
             res.redirect(reduri);
         //}
-    });    
+    });
+    /**
+     * mobile app posting the at, etc
+     */
+    app.post('/nativelog', function(req, res){
+        var access_token = req.param('at');
+        req.session.user = {};
+        req.session.user.access_token = access_token;
+        fb.apiCall('GET', '/me/', {access_token: req.session.user.access_token}, function(error, response, body){
+            if (error){
+                log.debug('error getting user info:' + error);
+                res.json(error, "false");
+                return;
+            }
+            log.notice('getting info from user:' + body.id);
+            req.session.user.name = body.username;
+            req.session.user.id = body.id;
+            res.json(null, "true");
+        });        
+    });
     /**
      * FB return
     */
@@ -102,7 +121,7 @@ module.exports = function(app, log){
                     }
                     log.notice('getting info from user:' + body.id);
                     req.session.user.name = body.username;
-                    req.session.user.id = body.id;                    
+                    req.session.user.id = body.id;
                     var dashboard = '/dashboard';
                     if (invited){
                         dashboard = '/dashboard?invited='+invited;
