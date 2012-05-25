@@ -77,6 +77,9 @@ module.exports = function(app, log){
      */
     app.get('/nativelog', function(req, res){
         var access_token = req.param('at');
+        if (access_token == undefined){
+            res.json("no at", "false");
+        }
         req.session.user = {};
         req.session.user.access_token = access_token;
         fb.apiCall('GET', '/me/', {access_token: req.session.user.access_token}, function(error, response, body){
