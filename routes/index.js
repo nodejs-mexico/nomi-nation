@@ -2,9 +2,7 @@
 /**
  * Rutas principales
 */
-var fb = require('facebook-js');/*, 
-    bowser = require('node-bowser'),
-    bt;*/
+var fb = require('facebook-js');
 
 module.exports = function(app, log){    
     /**
@@ -79,6 +77,7 @@ module.exports = function(app, log){
         var access_token = req.param('at');
         if (access_token == undefined){
             res.send("false");
+            return;
         }
         req.session.user = {};
         req.session.user.access_token = access_token;
@@ -92,7 +91,8 @@ module.exports = function(app, log){
             req.session.user.name = body.username;
             req.session.user.id = body.id;
             res.send("true");
-        });        
+            return;
+        });
     });
     /**
      * FB return
