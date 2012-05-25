@@ -13,7 +13,7 @@ var express = require('express'),
     /*schedule = require('node-schedule'),
     fb = require('facebook-js'),
     url = 'http://nomination.cloudno.de/',
-    nominator = require('./controllers/nominator.js');*/
+    nominator = require('./controllers/nominator.js');*/    
 
 var app = module.exports = express.createServer();
 
