@@ -75,7 +75,7 @@ module.exports = function(app, log){
     /**
      * mobile app posting the at, etc
      */
-    app.post('/nativelog', function(req, res){
+    app.get('/nativelog', function(req, res){
         var access_token = req.param('at');
         req.session.user = {};
         req.session.user.access_token = access_token;
