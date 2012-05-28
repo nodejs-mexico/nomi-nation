@@ -41,12 +41,7 @@ module.exports = function(app, log){
      * Logout page
      */
     app.get('/logout', function(req, res){
-        var ua = req.header('user-agent');
-        /*if(/mobile/i.test(ua)) {
-            res.json(true);
-        }else{*/
-            req.session.destroy(function(){ res.redirect('/'); });
-        //}
+        req.session.destroy(function(){ res.redirect('/'); });
     });
         
     /**
@@ -63,12 +58,7 @@ module.exports = function(app, log){
             redirect_uri: redirect, //cambiar si es necesario
             scope: 'offline_access,publish_stream,read_stream'
         });
-        var ua = req.header('user-agent');
-        /*if(/mobile/i.test(ua)) {
-            res.json(reduri);
-        }else{*/
-            res.redirect(reduri);
-        //}
+        res.redirect(reduri);
     });
     /**
      * mobile app posting the at, etc
@@ -129,11 +119,6 @@ module.exports = function(app, log){
                     if (invited){
                         dashboard = '/dashboard?invited='+invited;
                     }
-                    var ua = req.header('user-agent');
-                    /*if(/mobile/i.test(ua)) {
-                        res.json(invited);
-                        return;
-                    }*/
                     res.redirect(dashboard);
                 });
             }
