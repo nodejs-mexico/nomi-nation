@@ -61,7 +61,7 @@ module.exports = function(app, log){
     /**
      * Dashboardm landing
     */
-    app.get('/dashboardm', checkUser,    function(req, res){
+    app.get('/dashboardm', function(req, res){
         //log.notice('landed on dashboard user: ' + 
         //    req.session.user.id + ' on: ' + new Date() );
         //var invited = req.param('invited');

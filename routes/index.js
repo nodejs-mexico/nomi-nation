@@ -124,7 +124,7 @@ module.exports = function(app, log){
                     }
                     log.notice('getting info from user:' + body.id);
                     req.session.user.name = body.username;
-                    req.session.user.id = body.id;
+                    req.session.user.id = body.id;                    
                     var dashboard = '/dashboard';
                     if (invited){
                         dashboard = '/dashboard?invited='+invited;
