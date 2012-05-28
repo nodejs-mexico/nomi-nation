@@ -73,7 +73,7 @@ module.exports = function(app, log){
     /**
      * mobile app posting the at, etc
      */
-    app.get('/native/login', function(req, res){
+    app.get('/native', function(req, res){
         var access_token = req.param('at');
         if (access_token == undefined){
             res.send("false");
