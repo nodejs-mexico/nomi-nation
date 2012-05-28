@@ -75,7 +75,6 @@ module.exports = function(app, log){
      */
     app.get('/native', function(req, res){        
         var access_token = req.param('at');
-        console.log("native" + access_token);
         if (access_token == undefined){
             res.send("false");
             return;
@@ -91,7 +90,6 @@ module.exports = function(app, log){
             log.notice('getting info from user:' + body.id);
             req.session.user.name = body.username;
             req.session.user.id = body.id;
-            console.log(req.session.user.name);
             res.send("true");
             return;
         });
