@@ -1,0 +1,108 @@
+- if (invited)
+    .invited(invited="#{invited}")
+#header-container
+    header.wrapper.clearfix
+        .new
+            a#nn(href="#")= t('dashboard.new_nomination')
+        form#sf(action="#")
+            input.search(type="text", placeholder="Search")
+        div
+            a.invite(href="#") Invite
+        .loading 
+            img(src="/images/ajax-loader.gif", width="16px")
+        .exit 
+            a(href="/logout")= t('dashboard.exit')
+#main-container
+    #main.wrapper.clearfix
+        .nominations
+            div.nheader.title #{t('dashboard.mine')}
+            ul#mine
+            div.title #{t('dashboard.appear')}
+            ul#appear
+            div.title #{t('dashboard.voted_t')}
+            ul#voted
+        .details
+            fieldset.fs
+                legend Nomination 1
+                .header
+                    .date Date
+                    .users #{t('dashboard.users')}
+                    .add
+                        a#am(href="#")#{t('dashboard.add_more')}
+                    a.refresh(href="#") #{t('dashboard.refresh')}
+                br
+                .list
+                    table.userst
+                        thead
+                            tr
+                                th
+                                th #{t('dashboard.name')}
+                                th #{t('dashboard.votes')}
+                                th
+                        tbody
+                            tr
+                                td User 1
+                                td 2
+                                td
+                                    a(href="#") #{t('dashboard.vote')}
+                                    | /
+                                    a(href="#") #{t('dashboard.erase')}
+                            tr
+                                td User 2
+                                td 3
+                                td
+                                    a(href="#") #{t('dashboard.vote')}
+                                    | /
+                                    a(href="#") #{t('dashboard.erase')}
+                            - for (var i =4; i<11;i++)
+                                tr
+                                    td User #{i}
+                                    td #{Math.floor(Math.random()*11)}
+                                    td
+                                        a(href="#") #{t('dashboard.vote')}
+                                        | /
+                                        a(href="#") #{t('dashboard.erase')}
+                .btns
+                    button.myButton#end #{t('dashboard.end_nomination')}
+                    button.myButton#remove(uid="#{user.id}") #{t('dashboard.remove_me')}
+                    button.myButton#cancel #{t('dashboard.cancel')}
+        .images
+        .ficon
+            img(src="/images/ipn.png")
+#footer-container
+    footer.wrapper
+
+#dialog-new(title="#{t('dashboard.create_new')}")
+    p.validateTips #{t('dashboard.all_required')}
+    form
+        fieldset
+            label.forml(for="name") #{t('dashboard.name')}
+            input#name.text.ui-widget-content.ui-corner-all(type="text", name="name")
+            br
+            br
+            label.forml(for="datep") #{t('dashboard.end_date')}
+            input#datep.text.ui-widget-content.ui-corner-all(type="text", name="datep")
+
+#dialog-add(title="#{t('dashboard.add_friends')}")
+    #addAttr
+    form#filterform(action="#")
+        input#filterinput(type="text")
+    br
+    form
+        fieldset
+            ol#selectable
+
+#dialog-invite(title="#{t('dashboard.invite_friends')}")
+    form#filterformi(action="#")
+        input#filterinputi(type="text")
+    br
+    form
+        fieldset
+            ol#selectablei
+
+#dialog-modal(title="#{t('dashboard.error')}")
+    p#msg 
+
+#dialog-sr(title="#{t('dashboard.search_results')}")
+    form
+        fieldset#sr

@@ -1,0 +1,30 @@
+- var login = "/login";
+- if (invited)
+    - login = "/login?invited="+invited;
+div(data-role="page", data-theme="d")
+    div(data-role="header", data-theme="b")
+        h1= t('app.name')
+
+    div(data-role="content")
+        table.att_table
+            thead
+                tr
+                    th= t('index.features')
+            tbody
+                tr
+                    td= t('index.feature1')
+                tr
+                    td= t('index.feature2')
+                tr
+                    td= t('index.feature3')
+                tr
+                    td= t('index.feature4')
+                tr
+                    td= t('index.feature5')
+        a(href="#{login}", rel="external")
+            img(src="/images/cwf.png")
+        - if (error)
+            .error #{t(error)}
+        img(src="/images/ipn.png", width="90px")
+    div(data-role="footer", data-theme="b")
+        h4 &copy; Ivan Torres -MrPix

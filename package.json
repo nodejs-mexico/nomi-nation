@@ -1,0 +1,25 @@
+{
+    "name": "nomi-nation"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.2"
+    , "express-messages" : ">= 0.0.2"
+    , "facebook-js" : "1.0.1"
+    , "jade": ">= 0.0.1"
+    , "log" : "1.2.0"
+    , "mongoose" : "2.4.8"
+    , "vows" : "0.6.1"
+    , "zombie" : "0.12.9"
+    , "jsdom" : "0.2.10"
+    , "i18next" : "0.5.1"
+    , "mongodb" : "0.9.8-1"
+    , "node-bowser" : "0.1.0"
+    , "node-schedule" : "0.1.5"
+  },
+  "licenses": [
+    { "type": "agpl",
+      "url": "http://www.gnu.org/licenses/agpl.html"
+    }
+  ]
+}
